@@ -40,6 +40,9 @@
     <!-- Estilos propios para Carrusel -->
     <link rel="stylesheet" href="./assets/css/hero.css">
     <script src="./assets/js/glide.min.js"></script>
+
+    <!-- Script para Multilenguaje -->
+    <script src="./vendor/jquery/jquery.min.js"></script>
 </head>
 
 <body data-bs-spy="scroll" data-bs-target="#navbarmenu" data-bs-offset="70" tabindex="0">
@@ -60,10 +63,29 @@
                 <!-- Links centrados + botón derecha -->
                 <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
                     <ul class="navbar-nav">
-                        <li class="nav-item"><a class="nav-link" href="#resume">¿Quiénes somos?</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#mision-vision">Misión/Visión</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#firm">¿Qué hacemos?</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#contact">Contacto</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#resume" data-translate="navItem1">¿Quiénes somos?</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#mision-vision" data-translate="navItem2">Misión/Visión</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#firm" data-translate="navItem3">¿Qué hacemos?</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#contact" data-translate="navItem4">Contacto</a></li>
+                        <li class="nav-item d-flex justify-content-center gap-0">
+                            <a class="nav-link d-inline-flex 
+                            align-items-center lang-btn" href="#" data-lang="en"
+                            style="padding-right: 0px; color: black;"
+                            id="language-switch">
+                              <img src="assets/img/icon-english.png" 
+                              style="height: 40px;"
+                              alt="English">
+                              <span>EN | </span>
+                            </a>
+                            
+                            <a class="nav-link d-inline-flex align-items-center justify-content-start lang-btn" href="#" 
+                            style="padding-left: 0px; color: black;" data-lang="es" id="language-switch">
+                                <img src="assets/img/icon-spain.png" 
+                                style="height: 40px;"
+                                alt="Español">
+                                <span>ES</span>
+                              </a>
+                          </li>
                     </ul>
                 </div>
             </div>
@@ -76,7 +98,23 @@
             <div class="glide">
                 <div class="glide__track" data-glide-el="track">
                     <ul class="glide__slides">
+                        <!-- <li class="glide__slide">
+                            <video data-src="./assets/videos/hero.mp4" controls preload="none" poster="" class="lazy-video"
+                                muted playsinline></video>
+                        </li>
                         <li class="glide__slide">
+                            <video data-src="./assets/videos/hero2.mp4" controls preload="none" poster="" class="lazy-video"
+                                muted playsinline></video>
+                        </li>
+                        <li class="glide__slide">
+                            <video data-src="./assets/videos/hero3.mp4" controls preload="none" poster="" class="lazy-video"
+                                muted playsinline></video>
+                        </li>
+                        <li class="glide__slide">
+                            <video data-src="./assets/videos/hero4.mp4" controls preload="none" poster="" class="lazy-video"
+                                muted playsinline></video>
+                        </li> -->
+                       <li class="glide__slide">
                             <video src="./assets/videos/hero.mp4" autoplay muted loop playsinline></video>
                         </li>
                         <li class="glide__slide">
@@ -87,7 +125,7 @@
                         </li>
                         <li class="glide__slide">
                             <video src="./assets/videos/hero4.mp4" autoplay muted loop playsinline></video>
-                        </li>
+                        </li> 
                     </ul>
                 </div>
                 <div class="glide__arrows" data-glide-el="controls">
@@ -114,8 +152,8 @@
     <section id="resume">
         <div class="container">
             <div class="section-title">
-                <h2 class="resume resume-title">¿Quiénes somos?</h2>
-                <p>
+                <h2 class="resume resume-title" data-translate="navItem1" >¿Quiénes somos?</h2>
+                <p data-translate="description">
                     Electa trading es una sociedad controlada por Aluar, Aluminios Argentinos. La misma fue creada en
                     2022 con el objetivo de brindar soluciones a clientes finales de la industria del Aluminio y otros
                     commodities. Principalmente ofreciendo servicio, logística y financiación.
@@ -123,13 +161,13 @@
             </div>
             <div class="row" style="padding: 20px;">
                 <div class="d-flex flex-column col-md-12 resume-item justify-content-center align-items-center">
-                    <h5>Ubicación </h5>
+                    <h5 data-translate="location">Ubicación </h5>
                     <p>Dr. Luis Bonavita 1266, 707, WTC T4, Montevideo, Uruguay</p>
                 </div>
             </div>
             <div class="row" style="padding: 20px;">
                 <div class="d-flex flex-column col-md-12 resume-item justify-content-center align-items-center">
-                    <h5>Nuestro equipo </h5>
+                    <h5 data-translate="team">Nuestro equipo </h5>
 
                     <div class="row justify-content-center">
 
@@ -202,8 +240,8 @@
                 <!-- Misión -->
                 <div class="col-md-6 mb-4 mb-md-0 d-flex">
                     <div class="p-4 bg-white shadow-sm rounded-4 h-100">
-                        <h3 class="mb-3">Misión</h3>
-                        <p class="text-secondary">
+                        <h3 class="mb-3" data-translate="mision">Misión</h3>
+                        <p class="text-secondary" data-translate="descriptionMision">
                             Electa Trading trabaja para agregar valor a la cadena de suministro de materias primas
                             físicas. Nos esforzamos por brindar productos de calidad y un servicio excepcional a
                             nuestros clientes, ofreciendo soluciones de financiamiento, gestión de riesgos y servicios
@@ -215,8 +253,8 @@
                 <!-- Visión -->
                 <div class="col-md-6 d-flex">
                     <div class="p-4 bg-white shadow-sm rounded-4 h-100">
-                        <h3 class="mb-3">Visión</h3>
-                        <p class="text-secondary">
+                        <h3 class="mb-3" data-translate="vision">Visión</h3>
+                        <p class="text-secondary" data-translate="descriptionVision">
                             Convertirse en la principal referencia para la adquisición de productos vitales en todas las
                             regiones del mundo.
                         </p>
@@ -233,13 +271,13 @@
 
             <div class="section-title">
 
-                <h2>¿Qué hacemos?</h2>
-                <p>Ofrecemos Commodities con un servicio integral en todo el mundo.</p>
+                <h2 data-translate="navItem3">¿Qué hacemos?</h2>
+                <p data-translate="descriptionWhatWeDo">Ofrecemos Commodities con un servicio integral en todo el mundo.</p>
             </div>
             <!-- Productos Subsection -->
             <div class="d-flex align-items-center justify-content-center my-4">
                 <div class="flex-grow-1 border-top border-2 border-white"></div>
-                <h2 class="mx-3 text-white text-uppercase fs-5">Nuestros Productos</h2>
+                <h2 class="mx-3 text-white text-uppercase fs-5" data-translate="products">Nuestros Productos</h2>
                 <div class="flex-grow-1 border-top border-2 border-white"></div>
             </div>
             <div class="container ">
@@ -249,15 +287,14 @@
                     <div class="col-md-6">
                         <div class="service-card">
                             <i class="bi bi-gear-wide-connected fs-1 text-white mb-3"></i>
-                            <h5 class="fw-bold text-uppercase text-white">Metales</h5>
-                            <p class="text-light mb-0">Contamos con una amplia oferta de productos para abastecer los
-                                diferentes segmentos del mercado</p>
+                            <h5 class="fw-bold text-uppercase text-white" data-translate="metals">Metales</h5>
+                            <p class="text-light mb-0" data-translate="descriptionMetals">Contamos con una amplia oferta de productos para abastecer los diferentes segmentos del mercado</p>
                             <div>
-                                <span class="badge bg-light text-primary border me-1 mb-1">Aluminio</span>
-                                <span class="badge bg-light text-primary border me-1 mb-1">Cobre</span>
-                                <span class="badge bg-light text-primary border me-1 mb-1">Silicio</span>
-                                <span class="badge bg-light text-primary border me-1 mb-1">Magnesio</span>
-                                <span class="badge bg-light text-primary border me-1 mb-1">Zinc</span>
+                                <span class="badge bg-light text-primary border me-1 mb-1" data-translate="aluminio">Aluminio</span>
+                                <span class="badge bg-light text-primary border me-1 mb-1" data-translate="cobre">Cobre</span>
+                                <span class="badge bg-light text-primary border me-1 mb-1" data-translate="silicio">Silicio</span>
+                                <span class="badge bg-light text-primary border me-1 mb-1" data-translate="magnesio">Magnesio</span>
+                                <span class="badge bg-light text-primary border me-1 mb-1" data-translate="zinc">Zinc</span>
 
                             </div>
                         </div>
@@ -268,7 +305,7 @@
                         <div class="service-card">
                             <i class="bi bi-gear-wide-connected fs-1 text-white mb-3"></i>
                             <h5 class="fw-bold text-uppercase text-white">Oil & Gas</h5>
-                            <p class="text-light mb-0">Ofrecemos productos refinados y servicios logísticos.</p>
+                            <p class="text-light mb-0" data-translate="descriptionOil">Ofrecemos productos refinados y servicios logísticos.</p>
                         </div>
                     </div>
 
@@ -276,8 +313,8 @@
                     <div class="col-md-6">
                         <div class="service-card">
                             <i class="bi bi-sun fs-1 text-white mb-3"></i>
-                            <h5 class="fw-bold text-uppercase text-white">Renovables</h5>
-                            <p class="text-light mb-0">Comercialización de diferentes energías renovables.</p>
+                            <h5 class="fw-bold text-uppercase text-white" data-translate="renovables">Renovables</h5>
+                            <p class="text-light mb-0" data-translate="descriptionRenovables">Comercialización de diferentes energías renovables.</p>
                         </div>
                     </div>
 
@@ -285,8 +322,8 @@
                     <div class="col-md-6">
                         <div class="service-card">
                             <i class="bi bi-recycle fs-1 text-white mb-3"></i>
-                            <h5 class="fw-bold text-uppercase text-white">Reciclado</h5>
-                            <p class="text-light mb-0">
+                            <h5 class="fw-bold text-uppercase text-white" data-translate="reciclado">Reciclado</h5>
+                            <p class="text-light mb-0" data-translate="descriptionReciclado">
                                 Ofrecemos productos reciclados, principalmente en el mercado de Aluminio.
                             </p>
                         </div>
@@ -298,7 +335,7 @@
                 <!-- Servicios Subsection -->
                 <div class="d-flex align-items-center justify-content-center my-4">
                     <div class="flex-grow-1 border-top border-2 border-white"></div>
-                    <h2 class="mx-3 text-white text-uppercase fs-5">Nuestros Servicios</h2>
+                    <h2 class="mx-3 text-white text-uppercase fs-5" data-translate="services">Nuestros Servicios</h2>
                     <div class="flex-grow-1 border-top border-2 border-white"></div>
                 </div>
                 <div class="container ">
@@ -308,8 +345,8 @@
                         <div class="col-md-4">
                             <div class="service-card">
                                 <i class="bi bi-cash-coin fs-1 text-white mb-3"></i>
-                                <h5 class="fw-bold text-uppercase text-white">Financiación</h5>
-                                <p class="text-light mb-0">Buscamos ofrecer soluciones financieras para nuestros
+                                <h5 class="fw-bold text-uppercase text-white" data-translate="financiacion">Financiación</h5>
+                                <p class="text-light mb-0" data-translate="descriptionFinanciacion">Buscamos ofrecer soluciones financieras para nuestros
                                     clientes</p>
                             </div>
                         </div>
@@ -318,8 +355,8 @@
                         <div class="col-md-4">
                             <div class="service-card">
                                 <i class="bi bi-truck-flatbed fs-1 text-white mb-3"></i>
-                                <h5 class="fw-bold text-uppercase text-white">Logística</h5>
-                                <p class="text-light mb-0"> Ofrecemos servicios logísticos tanto por barco como por
+                                <h5 class="fw-bold text-uppercase text-white" data-translate="logistica">Logística</h5>
+                                <p class="text-light mb-0" data-translate="descriptionLogistica"> Ofrecemos servicios logísticos tanto por barco como por
                                     camión en los diferentes países del mundo.</p>
                             </div>
                         </div>
@@ -329,7 +366,7 @@
                             <div class="service-card">
                                 <i class="bi bi-bank fs-1 text-white mb-3"></i>
                                 <h5 class="fw-bold text-uppercase text-white">Warehousing</h5>
-                                <p class="text-light mb-0">Trabajamos con depósitos en diferentes zonas del mundo para
+                                <p class="text-light mb-0" data-translate="descriptionWarehousing">Trabajamos con depósitos en diferentes zonas del mundo para
                                     optimizar nuestras entregas.</p>
                             </div>
                         </div>
@@ -347,8 +384,8 @@
 
                     <div class="col-md-6">
                         <div class="mt-4">
-                            <h3>Envíenos su consulta</h3>
-                            <p>
+                            <h3 data-translate="titleContact">Envíenos su consulta</h3>
+                            <p data-translate="descriptionContact">
                                 Si desea más información, póngase en contacto con nosotros
                             </p>
 
@@ -377,11 +414,12 @@
 
                             <div class="row">
                                 <div class="col-md-6 form-group mt-3">
-                                    <input class="form-control" name="nombre" type="text" placeholder="Nombre (*)"
+                                    <input class="form-control" name="nombre" type="text" placeholder="Nombre (*)" data-translate="labelName"
+                                    data-attr="placeholder"
                                         required>
                                 </div>
                                 <div class="col-md-6 form-group mt-3">
-                                    <input class="form-control" name="empresa" type="text" placeholder="Empresa (*)"
+                                    <input class="form-control" name="empresa" type="text" data-attr="placeholder" data-translate="labelCompany" placeholder="Empresa (*)"
                                         required>
                                 </div>
                                 <div class="col-md-6 form-group mt-3">
@@ -389,12 +427,13 @@
                                         required>
                                 </div>
                                 <div class="col-md-6 form-group mt-3">
-                                    <input class="form-control" name="telefono" type="text" placeholder="Teléfono (*)"
+                                    <input class="form-control" name="telefono" type="text" 
+                                    data-attr="placeholder" data-translate="labelTelephone" placeholder="Teléfono (*)"
                                         required>
                                 </div>
                             </div>
                             <div class="form-group mt-3">
-                                <textarea class="form-control" name="mensaje" rows="4" placeholder="Mensaje (*)"
+                                <textarea class="form-control" name="mensaje" rows="4" data-attr="placeholder" data-translate="labelMessage" placeholder="Mensaje (*)"
                                     required></textarea>
                             </div>
                             <div class="mt-3">
@@ -403,7 +442,7 @@
                                 <div class="g-recaptcha" data-sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI">
                                 </div>
 
-                                <input type="submit" class="btn btn-primary mt-3" value="Enviar">
+                                <input type="submit" class="btn btn-primary mt-3" data-attr="value" data-translate="labelSend" value="Enviar">
                             </div>
                         </form>
                     </div>
@@ -452,8 +491,11 @@
     <script src="assets/vendor/waypoints/noframework.waypoints.js"></script>
     <!-- Template Main JS File -->
     <script src="assets/js/main.js"></script>
+    <script src="./assets/js/lang.js"></script>
 
     <script>
+
+        // NAVBAR
         const navbarToggler = document.querySelector('.navbar-toggler');
         const navMenu = document.getElementById('navbarmenu');
 
