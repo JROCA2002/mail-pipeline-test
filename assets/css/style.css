@@ -621,6 +621,10 @@ h1,h2,h3,h4,h5,h6 {
 }
 @media (max-width: 575px) 
 {
+  #members {
+    padding: 0 1em;
+    width: 100vw;
+  }
   #members .container {
     width: 100%;
 
