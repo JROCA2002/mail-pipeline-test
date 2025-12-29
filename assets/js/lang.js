@@ -6,25 +6,26 @@ const translations = {
         navItem3: "¿Qué hacemos?",
         navItem4: "Contacto",
 
-        description: `Electa trading es una sociedad controlada por Aluar, Aluminios Argentinos. La misma fue creada en
-      2022 con el objetivo de brindar soluciones a clientes finales de la industria del Aluminio y otros
-      commodities. Principalmente ofreciendo servicio, logística y financiación.`,
+        description: `Desde Electa Trading, abastecemos a clientes de todo el mundo con aluminio y otros commodities de 
+        forma eficiente y confiable. Como sociedad controlada por Aluar Aluminio Argentino, desde 2022 proveemos 
+        servicios logísticos, ofrecemos soluciones de financiamiento y gestión de riesgos para que nuestros clientes 
+        operen con previsibilidad, agilidad y respaldo.`,
         location: "Ubicación",
         team: "Nuestro equipo",
         mision: "Misión",
-        descriptionMision: `Electa Trading trabaja para agregar valor a la cadena de suministro de materias primas
-        físicas. Nos esforzamos por brindar productos de calidad y un servicio excepcional a
-        nuestros clientes, ofreciendo soluciones de financiamiento, gestión de riesgos y servicios
-        logísticos a lo largo de toda la cadena de suministro.`,
+        descriptionMision: `Brindamos soluciones integrales a nuestros clientes, agregando valor a la cadena de 
+        suministro de materias primas. Nos destacamos por el profesionalismo de nuestros equipos y el conocimiento de 
+        los mercados donde operamos.`,
         vision: "Visión",
         descriptionVision: `Convertirse en la principal referencia para la adquisición de productos vitales en todas las
         regiones del mundo.`,
 
-        descriptionWhatWeDo: "Ofrecemos Commodities con un servicio integral en todo el mundo.",
+        descriptionWhatWeDo: "Ofrecemos commodities con un servicio integral en todo el mundo.",
 
         products: "Nuestros Productos",
+        descriptionProducts: "Nuestro portafolio incluye soluciones actualmente disponibles y líneas en desarrollo.",
         metals: "Metales",
-        descriptionMetals: "Contamos con una amplia oferta de productos para abastecer los diferentes segmentos del mercado",
+        descriptionMetals: "Contamos con una amplia oferta de productos para abastecer los diferentes segmentos del mercado.",
         aluminio: "Aluminio",
         cobre: "Cobre",
         silicio: "Silicio",
@@ -35,17 +36,17 @@ const translations = {
         renovables: "Renovables",
         descriptionRenovables: "Comercialización de diferentes energías renovables.",
         reciclado: "Reciclado",
-        descriptionReciclado: "Ofrecemos productos reciclados, principalmente en el mercado de Aluminio.",
+        descriptionReciclado: "Ofrecemos productos reciclados, principalmente en el mercado de aluminio.",
 
         services: "Nuestros Servicios",
         financiacion: "Financiación",
-        descriptionFinancion: "Buscamos ofrecer soluciones financieras para nuestros clientes",
+        descriptionFinanciacion: "Buscamos ofrecer soluciones financieras para nuestros clientes.",
         logistica: "Logística",
         descriptionLogistica: "Ofrecemos servicios logísticos tanto por barco como por camión en los diferentes países del mundo.",
         descriptionWarehousing: "Trabajamos con depósitos en diferentes zonas del mundo para optimizar nuestras entregas.",
 
         titleContact: "Envíenos su consulta",
-        descriptionContact: "Si desea más información, póngase en contacto con nosotros",
+        descriptionContact: "Si desea más información, póngase en contacto con nosotro.",
 
         labelName: "Nombre (*)",
         labelCompany: "Empresa (*)",
@@ -59,16 +60,22 @@ const translations = {
         navItem3: "What we do",
         navItem4: "Contact",
 
-        description: `Electa trading is a subsidiary of Aluar Aluminio Argentino. It was created in 2022 with the objective of delivering solutions to the final customers of the Aluminum Industry and other commodities.  Mainly offering services, logistics and financing.`,
+        description: `From Electa Trading, we supply customers around the world with aluminum and other commodities
+        efficiently and reliably. As a company controlled by Aluar Aluminio Argentino, since 2022 we provide
+        logistics services, offer financing solutions and risk management so that our customers can operate
+        with predictability, agility and support.`,
         location: "Location",
         team: "Team",
         mision: "Mission",
-        descriptionMision: `Electa Trading works to add value to the supply chain of Physical commodities. We strive to provide quality products and maintain an exceptional service for our customers by offering financing solutions, risk management and logistic services throughout the supply chain.`,
+        descriptionMision: `We provide comprehensive solutions to our customers, adding value to the supply
+        chain of raw materials. We stand out for the professionalism of our teams and the knowledge of the
+        markets where we operate.`,
         vision: "Vision",
         descriptionVision: `Become the main reference for vital product procurement in all regions of the world.`,
-        descriptionWhatWeDo: "We offer Commodities with an integral service all around the world.",
+        descriptionWhatWeDo: "We offer commodities with an integral service all around the world.",
 
         products: "Our Products",
+        descriptionProducts: "Our portfolio includes currently available solutions and lines in development.",
         metals: "Metals",
         descriptionMetals: "We have a wide range of products to supply different market segments.",
         aluminio: "Aluminum",
@@ -81,11 +88,11 @@ const translations = {
         renovables: "Renowables",
         descriptionRenovables: "Electa offers different types of renewables energies for consumption.",
         reciclado: "Recycling",
-        descriptionReciclado: "We offer recycled products, mainly in the aluminum market",
+        descriptionReciclado: "We offer recycled products, mainly in the aluminum market.",
 
         services: "Our Services",
         financiacion: "Financing",
-        descriptionFinancion: "We do an exhaustive study to provide the best financial service to our customers.",
+        descriptionFinanciacion: "We do an exhaustive study to provide the best financial service to our customers.",
         logistica: "Logistic",
         descriptionLogistica: "Our goal is to meet our customer’s needs through logistic services by ship or truck all around the world.",
         descriptionWarehousing: "We optimize our deliveries working with warehouses in different regions.",
