@@ -6,46 +6,48 @@ const translations = {
         navItem3: "¿Qué hacemos?",
         navItem4: "Contacto",
 
-        description: `Electa trading es una sociedad controlada por Aluar, Aluminios Argentinos. La misma fue creada en
-      2022 con el objetivo de brindar soluciones a clientes finales de la industria del Aluminio y otros
-      commodities. Principalmente ofreciendo servicio, logística y financiación.`,
+        description: `Desde Electa Trading, abastecemos a clientes de todo el mundo con aluminio y otros commodities de 
+        forma eficiente y confiable. Como sociedad controlada por Aluar Aluminio Argentino, desde 2022 proveemos 
+        servicios logísticos, ofrecemos soluciones de financiamiento y gestión de riesgos para que nuestros clientes 
+        operen con previsibilidad, agilidad y respaldo.`,
         location: "Ubicación",
         team: "Nuestro equipo",
         mision: "Misión",
-        descriptionMision: `Electa Trading trabaja para agregar valor a la cadena de suministro de materias primas
-        físicas. Nos esforzamos por brindar productos de calidad y un servicio excepcional a
-        nuestros clientes, ofreciendo soluciones de financiamiento, gestión de riesgos y servicios
-        logísticos a lo largo de toda la cadena de suministro.`,
+        descriptionMision: `Brindamos soluciones integrales a nuestros clientes, agregando valor a la cadena de 
+        suministro de materias primas. Nos destacamos por el profesionalismo de nuestros equipos y el conocimiento de 
+        los mercados donde operamos.`,
         vision: "Visión",
-        descriptionVision: `Convertirse en la principal referencia para la adquisición de productos vitales en todas las
-        regiones del mundo.`,
+        descriptionVision: `Buscamos ser un actor clave en la adquisición de productos vitales en la región
+        y en el mundo, a partir de la calidad de nuestros productos y visión estratégica.`,
 
-        descriptionWhatWeDo: "Ofrecemos Commodities con un servicio integral en todo el mundo.",
+        descriptionWhatWeDo: "Ofrecemos commodities con un servicio integral en todo el mundo.",
 
         products: "Nuestros Productos",
+        descriptionProducts: "Nuestro portafolio incluye soluciones actualmente disponibles y líneas en desarrollo.",
         metals: "Metales",
-        descriptionMetals: "Contamos con una amplia oferta de productos para abastecer los diferentes segmentos del mercado",
+        descriptionMetals: "Amplia oferta de metales no ferrosos para abastecer los diferentes segmentos del mercado.",
         aluminio: "Aluminio",
         cobre: "Cobre",
         silicio: "Silicio",
         magnesio: "Magnesio",
         zinc: "Zinc",
 
-        descritionOil: "Ofrecemos productos refinados y servicios logísticos.",
+        descritionOil: "Productos refinados y servicios logísticos.",
         renovables: "Renovables",
         descriptionRenovables: "Comercialización de diferentes energías renovables.",
         reciclado: "Reciclado",
-        descriptionReciclado: "Ofrecemos productos reciclados, principalmente en el mercado de Aluminio.",
+        descriptionReciclado: "Productos reciclados, principalmente en el mercado de aluminio.",
 
         services: "Nuestros Servicios",
         financiacion: "Financiación",
-        descriptionFinancion: "Buscamos ofrecer soluciones financieras para nuestros clientes",
+        descriptionFinanciacion: "Buscamos ofrecer soluciones financieras para nuestros clientes.",
         logistica: "Logística",
-        descriptionLogistica: "Ofrecemos servicios logísticos tanto por barco como por camión en los diferentes países del mundo.",
-        descriptionWarehousing: "Trabajamos con depósitos en diferentes zonas del mundo para optimizar nuestras entregas.",
+        descriptionLogistica: "Ofrecemos servicios logísticos intermodales en diferentes países del mundo.",
+        almacenamiento: "Almacenamiento",
+        descriptionWarehousing: "Trabajamos con depósitos globales para optimizar nuestras entregas.",
 
-        titleContact: "Envíenos su consulta",
-        descriptionContact: "Si desea más información, póngase en contacto con nosotros",
+        titleContact: "Envíanos tu consulta",
+        descriptionContact: "Contáctanos para más información.",
 
         labelName: "Nombre (*)",
         labelCompany: "Empresa (*)",
@@ -59,43 +61,52 @@ const translations = {
         navItem3: "What we do",
         navItem4: "Contact",
 
-        description: `Electa trading is a subsidiary of Aluar Aluminio Argentino. It was created in 2022 with the objective of delivering solutions to the final customers of the Aluminum Industry and other commodities.  Mainly offering services, logistics and financing.`,
+        description: `At Electa Trading, we efficiently and reliably supply customers worldwide with
+        aluminum and other commodities. As a company controlled by Aluar Aluminio
+        Argentino, we provide logistics services, financing, and risk management
+        solutions since 2022 to ensure our clients operate with predictability, agility, and
+        support.`,
         location: "Location",
-        team: "Team",
+        team: "Our team",
         mision: "Mission",
-        descriptionMision: `Electa Trading works to add value to the supply chain of Physical commodities. We strive to provide quality products and maintain an exceptional service for our customers by offering financing solutions, risk management and logistic services throughout the supply chain.`,
+        descriptionMision: `We provide comprehensive solutions to our clients, adding value to the raw
+        materials supply chain. Our approach is driven by professional teams with a
+        strong understanding of the markets where we operate.`,
         vision: "Vision",
-        descriptionVision: `Become the main reference for vital product procurement in all regions of the world.`,
-        descriptionWhatWeDo: "We offer Commodities with an integral service all around the world.",
+        descriptionVision: `To become a key player in the acquisition of vital products in the region and the
+        world, grounded on our strategic vision and the quality of our products.`,
+        descriptionWhatWeDo: "We commercialize commodities with comprehensive service worldwide.",
 
         products: "Our Products",
+        descriptionProducts: "Our portfolio features currently available solutions, as well as lines under development.",
         metals: "Metals",
-        descriptionMetals: "We have a wide range of products to supply different market segments.",
+        descriptionMetals: "A wide range of non-ferrous metals to supply different market segments.",
         aluminio: "Aluminum",
         cobre: "Copper",
         silicio: "Silicon",
         magnesio: "Magnesium",
         zinc: "Zinc",
 
-        descriptionOil: "We offer refined products and logistic services.",
+        descriptionOil: "Refined products and logistics services.",
         renovables: "Renowables",
-        descriptionRenovables: "Electa offers different types of renewables energies for consumption.",
+        descriptionRenovables: "Marketing of various renewable energy sources.",
         reciclado: "Recycling",
-        descriptionReciclado: "We offer recycled products, mainly in the aluminum market",
+        descriptionReciclado: "Recycled products, primarily in the aluminum market.",
 
         services: "Our Services",
         financiacion: "Financing",
-        descriptionFinancion: "We do an exhaustive study to provide the best financial service to our customers.",
+        descriptionFinanciacion: "We offer financial solutions for our clients.",
         logistica: "Logistic",
-        descriptionLogistica: "Our goal is to meet our customer’s needs through logistic services by ship or truck all around the world.",
-        descriptionWarehousing: "We optimize our deliveries working with warehouses in different regions.",
+        descriptionLogistica: "We provide intermodal logistics services in various countries worldwide.",
+        almacenamiento: "Warehousing",
+        descriptionWarehousing: "We work with warehouses globally to optimize our deliveries.",
 
         titleContact: "Send us your inquiry",
-        descriptionContact: "If you would like more information, please contact us.",
+        descriptionContact: "Contact us for more information.",
 
         labelName: "Name (*)",
         labelCompany: "Company (*)",
-        labelTelephone: "Telephone (*)",
+        labelTelephone: "Phone (*)",
         labelMessage: "Message (*)",
         labelSend: "Send"
     }
