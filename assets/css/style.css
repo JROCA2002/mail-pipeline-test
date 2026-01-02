@@ -206,6 +206,11 @@ h1,h2,h3,h4,h5,h6 {
 #header .navbar-brand {
   max-width: 200px;
   height: auto;
+
+  img{
+    padding-left: 0;
+    padding-right: 0;
+  }
 }
 
 #header .navbar a:hover,
