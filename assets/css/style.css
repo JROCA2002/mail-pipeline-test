@@ -71,14 +71,14 @@
 body {
   font-family: 'Montserrat', sans-serif;
   color: #454545;
-  padding-top: 100px;
+  padding-top: 90px;
 }
 
 /* Desktop / tablet */
 html {
   scroll-padding-top: 110px;
   /* altura navbar en escritorio */
-  scroll-behavior: smooth;
+  scroll-behavior: smooth !important;
 }
 
 /* Mobile */
@@ -173,9 +173,12 @@ h1,h2,h3,h4,h5,h6 {
 #header {
   z-index: 997;
   transition: all 0.5s;
-  height: 100px;
   background-color: #ffffff ; 
+  position: fixed;
+  top: 0;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); 
+  transition: max-height 0.4s ease;
+  max-height: 100px;
 }
 
 /*--------------------------------------------------------------
@@ -192,10 +195,14 @@ h1,h2,h3,h4,h5,h6 {
 
 */
 #navbarmenu {
+  background: #fff;
   transition: background-color 0.5s ease;
   height: 100%;
 }
 
+#header.menu-open {
+  max-height: 340px; /* suficiente para los links */
+}
 
 #header .navbar a,
 #header .navbar a:focus {
@@ -211,14 +218,6 @@ h1,h2,h3,h4,h5,h6 {
     padding-left: 0;
     padding-right: 0;
   }
-}
-
-#header .navbar a:hover,
-#header .navbar .active,
-#header .navbar .active:focus,
-#header .navbar li:hover>a {
-  color: #24458C;
-  font-weight: 600;
 }
 
 .navbar ul {
@@ -248,15 +247,22 @@ h1,h2,h3,h4,h5,h6 {
   letter-spacing: 1px;
 }
 
-.navbar a img,
-.navbar a:focus img {
-  font-size: 100px;
+.navbar a img{
   line-height: 0;
   padding: 10px;
   height: 82px;
   align-self: left;
 }
 
+#navbar-logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+#navbar-logo:hover {
+  transform: none;
+}
 
 .navbar a i,
 .navbar a:focus i {
@@ -266,7 +272,8 @@ h1,h2,h3,h4,h5,h6 {
 }
 
 #header .navbar li a:hover,
-.navbar li .active,
+#header .navbar li a span:hover,
+#header .navbar li a.active,
 .navbar li .active:focus,
 .navbar li:hover>a {
   color: #24458C;

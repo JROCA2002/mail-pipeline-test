@@ -11,7 +11,7 @@
     <meta content="industria de aluminios" name="keywords">
 
     <!-- Favicons -->
-    <link href="assets/img/logo-4-icono.png" rel="icon">
+    <link href="assets/img/logo-icono.png" rel="icon">
     <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet"> -->
 
     <!-- Google Fonts -->
@@ -49,8 +49,8 @@
         <nav id="navbarmenu" class="navbar navbar-expand-lg navbar-light pt-0 pb-0">
             <div class="container">
                 <!-- Logo -->
-                <a class="navbar-brand me-auto" href="#hero">
-                    <img src="assets/img/logo-4-icono.png" alt="Electa trading Logo">
+                <a class="navbar-brand me-auto" href="#" id="navbar-logo">
+                    <img src="assets/img/logo-icono.png" alt="Electa trading Logo">
                     <img src="assets/img/nombre-empresa.png" alt="Electa Trading" width="90">
                 </a>
 
@@ -71,14 +71,14 @@
                                 hacemos?</a></li>
                         <li class="nav-item"><a class="nav-link" href="#contact" data-translate="navItem4">Contacto</a>
                         </li>
-                        <li class="nav-item d-flex justify-content-center gap-0">
+                        <li class="nav-item d-flex justify-content-center align-items-center gap-1">
                             <a class="nav-link d-inline-flex 
                             align-items-center lang-btn" href="#" data-lang="en"
                                 style="padding-right: 0px; color: black;" id="language-switch">
                                 <img src="assets/img/icon-english.png" style="height: 40px;" alt="English">
-                                <span>EN | </span>
+                                <span>EN</span> 
                             </a>
-
+                            <span>|</span>
                             <a class="nav-link d-inline-flex align-items-center justify-content-start lang-btn" href="#"
                                 style="padding-left: 0px; color: black;" data-lang="es" id="language-switch">
                                 <img src="assets/img/icon-spain.png" style="height: 40px;" alt="Español">
@@ -114,7 +114,7 @@
                                 muted playsinline></video>
                         </li> -->
                         <li class="glide__slide">
-                            <video id="video-muestra" src="./assets/videos/hero.mp4" autoplay muted loop
+                            <video id="video-muestra" src="./assets/videos/video-oficial.mp4" autoplay muted loop
                                 playsinline></video>
                         </li>
                         <!-- <li class="glide__slide">
@@ -477,7 +477,7 @@
             <div class="row mt-0 justify-content-center align-items-center">
 
                 <div class="col-12 col-md-4 text-center text-md-start mb-2 mb-md-0">
-                    <h3><img src="assets/img/logo-4.png" width="auto" height="70px"></h3>
+                    <h3><img src="assets/img/logo.png" width="auto" height="70px"></h3>
                 </div>
 
                 <div class="col-12 col-md-4 text-center text-md-end social-links">
@@ -515,14 +515,6 @@
     <script src="./assets/js/lang.js"></script>
 
     <script>
-
-        // NAVBAR
-        const navbarToggler = document.querySelector('.navbar-toggler');
-        const navMenu = document.getElementById('navbarmenu');
-
-        navbarToggler.addEventListener('click', () => {
-            navMenu.classList.toggle('bg-light');
-        });
 
         const cards = document.querySelectorAll('.service-card');
 
