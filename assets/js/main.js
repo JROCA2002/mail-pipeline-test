@@ -1,10 +1,4 @@
-/**
-* Template Name: Laura - v4.7.0
-* Template URL: https://bootstrapmade.com/laura-free-creative-bootstrap-theme/
-* Author: BootstrapMade.com
-* License: https://bootstrapmade.com/license/
-*/
-(function() {
+(function () {
   "use strict";
 
   /**
@@ -110,42 +104,41 @@
     onscroll(document, toggleBacktotop)
   }
 
-  /**
-   * Mobile nav toggle
-   */
-  on('click', '.mobile-nav-toggle', function(e) {
-    select('#navbar').classList.toggle('navbar-mobile')
-    this.classList.toggle('bi-list')
-    this.classList.toggle('bi-x')
+  const navbarCollapse = document.getElementById('navbarNav');
+  const header = document.getElementById('header');
+
+  navbarCollapse.addEventListener('shown.bs.collapse', () => {
+    header.classList.add('menu-open');
+  });
+
+  navbarCollapse.addEventListener('hidden.bs.collapse', (e) => {
+    e.preventDefault(); // frenamos el cierre inmediato
+    header.classList.remove('menu-open');
+    // esperamos que termine la animación
+    setTimeout(() => {
+      bootstrap.Collapse.getOrCreateInstance(navbarCollapse).hide();
+    }, 500); // mismo tiempo que el transition
+
+  });
+
+  // CERRAR AL CLICK EN LINKS (mobile)
+  document.querySelectorAll('#navbarNav .nav-link').forEach(link => {
+    link.addEventListener('click', () => {
+      header.classList.remove('menu-open');
+
+      setTimeout(() => {
+        bootstrap.Collapse.getOrCreateInstance(navbarCollapse).hide();
+      }, 500);
+    });
+  });
+
+  on('click', '.back-to-top', function (e) {
+    e.preventDefault()
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    })
   })
-
-  /**
-   * Mobile nav dropdowns activate
-   */
-  on('click', '.navbar .dropdown > a', function(e) {
-    if (select('#navbar').classList.contains('navbar-mobile')) {
-      e.preventDefault()
-      this.nextElementSibling.classList.toggle('dropdown-active')
-    }
-  }, true)
-
-  /**
-   * Scrool with ofset on links with a class name .scrollto
-   */
-  on('click', '.scrollto', function(e) {
-    if (select(this.hash)) {
-      e.preventDefault()
-
-      let navbar = select('#navbar')
-      if (navbar.classList.contains('navbar-mobile')) {
-        navbar.classList.remove('navbar-mobile')
-        let navbarToggle = select('.mobile-nav-toggle')
-        navbarToggle.classList.toggle('bi-list')
-        navbarToggle.classList.toggle('bi-x')
-      }
-      scrollto(this.hash)
-    }
-  }, true)
 
   /**
    * Scroll with ofset on page load with hash links in the url
@@ -158,93 +151,6 @@
     }
   });
 
-  /**
-   * Skills animation
-   */
-  let skilsContent = select('.skills-content');
-  if (skilsContent) {
-    new Waypoint({
-      element: skilsContent,
-      offset: '80%',
-      handler: function(direction) {
-        let progress = select('.progress .progress-bar', true);
-        progress.forEach((el) => {
-          el.style.width = el.getAttribute('aria-valuenow') + '%'
-        });
-      }
-    })
-  }
-
-  /**
-   * Testimonials slider
-   */
-  new Swiper('.testimonials-slider', {
-    speed: 600,
-    loop: true,
-    autoplay: {
-      delay: 5000,
-      disableOnInteraction: false
-    },
-    slidesPerView: 'auto',
-    pagination: {
-      el: '.swiper-pagination',
-      type: 'bullets',
-      clickable: true
-    }
-  });
-
-  /**
-   * Porfolio isotope and filter
-   */
-  window.addEventListener('load', () => {
-    let portfolioContainer = select('.portfolio-container');
-    if (portfolioContainer) {
-      let portfolioIsotope = new Isotope(portfolioContainer, {
-        itemSelector: '.portfolio-item'
-      });
-
-      let portfolioFilters = select('#portfolio-flters li', true);
-
-      on('click', '#portfolio-flters li', function(e) {
-        e.preventDefault();
-        portfolioFilters.forEach(function(el) {
-          el.classList.remove('filter-active');
-        });
-        this.classList.add('filter-active');
-
-        portfolioIsotope.arrange({
-          filter: this.getAttribute('data-filter')
-        });
-
-      }, true);
-    }
-
-  });
-
-  /**
-   * Initiate portfolio lightbox 
-   */
-  const portfolioLightbox = GLightbox({
-    selector: '.portfolio-lightbox'
-  });
-
-  /**
-   * Portfolio details slider
-   */
-  new Swiper('.portfolio-details-slider', {
-    speed: 400,
-    loop: true,
-    autoplay: {
-      delay: 5000,
-      disableOnInteraction: false
-    },
-    pagination: {
-      el: '.swiper-pagination',
-      type: 'bullets',
-      clickable: true
-    }
-  });
-
 })()
 
 const form = document.querySelector(".php-email-form");
@@ -254,25 +160,25 @@ const errorMessage = document.getElementById('error-message');
 function showTemporaryMessage(element, duration = 5000) {
   [successMessage, errorMessage].forEach(msg => {
     msg.classList.remove('show-message');
-    msg.style.display = 'none'; 
+    msg.style.display = 'none';
   });
 
   element.style.display = 'block';
   setTimeout(() => {
     element.classList.add('show-message');
-  }, 10); 
+  }, 10);
 
   setTimeout(() => {
     element.classList.remove('show-message');
     setTimeout(() => {
       element.style.display = 'none';
-    }, 500); 
+    }, 500);
   }, duration);
 }
 
 if (form) {
   form.addEventListener("submit", function (event) {
-    event.preventDefault(); 
+    event.preventDefault();
 
     // Obtengo el token que genera Google al marcar "No soy un robot"
     const captchaToken = grecaptcha.getResponse();
@@ -307,7 +213,7 @@ if (form) {
           successMessage.textContent = "¡Mensaje enviado correctamente! Te contactaremos pronto.";
           showTemporaryMessage(successMessage);
           form.reset();
-          grecaptcha.reset(); 
+          grecaptcha.reset();
         } else {
           errorMessage.textContent = "Captcha inválido o error al enviar el correo.";
           showTemporaryMessage(errorMessage);
@@ -321,6 +227,6 @@ if (form) {
       })
       .finally(() => {
         submitButton.disabled = false;
-    });
+      });
   });
 }
