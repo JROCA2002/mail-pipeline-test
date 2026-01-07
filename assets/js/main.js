@@ -116,7 +116,7 @@
     header.classList.remove('menu-open');
     // esperamos que termine la animación
     setTimeout(() => {
-      bootstrap.Collapse.getOrCreateInstance(navbarCollapse).hide();
+      bootstrap.Collapse.getInstance(navbarCollapse).hide();
     }, 500); // mismo tiempo que el transition
 
   });
@@ -127,7 +127,10 @@
       header.classList.remove('menu-open');
 
       setTimeout(() => {
-        bootstrap.Collapse.getOrCreateInstance(navbarCollapse).hide();
+        const instance = bootstrap.Collapse.getInstance(navbarCollapse);
+        if (instance) {
+          instance.hide();
+        }
       }, 500);
     });
   });
