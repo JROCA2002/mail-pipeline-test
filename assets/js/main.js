@@ -1,10 +1,4 @@
-/**
-* Template Name: Laura - v4.7.0
-* Template URL: https://bootstrapmade.com/laura-free-creative-bootstrap-theme/
-* Author: BootstrapMade.com
-* License: https://bootstrapmade.com/license/
-*/
-(function() {
+(function () {
   "use strict";
 
   /**
@@ -117,12 +111,28 @@
     header.classList.add('menu-open');
   });
 
-  navbarCollapse.addEventListener('hidden.bs.collapse', () => {
+  navbarCollapse.addEventListener('hidden.bs.collapse', (e) => {
+    e.preventDefault(); // frenamos el cierre inmediato
     header.classList.remove('menu-open');
+    // esperamos que termine la animación
+    setTimeout(() => {
+      bootstrap.Collapse.getOrCreateInstance(navbarCollapse).hide();
+    }, 500); // mismo tiempo que el transition
+
   });
 
+  // CERRAR AL CLICK EN LINKS (mobile)
+  document.querySelectorAll('#navbarNav .nav-link').forEach(link => {
+    link.addEventListener('click', () => {
+      header.classList.remove('menu-open');
 
-  on('click', '.back-to-top', function(e) {
+      setTimeout(() => {
+        bootstrap.Collapse.getOrCreateInstance(navbarCollapse).hide();
+      }, 500);
+    });
+  });
+
+  on('click', '.back-to-top', function (e) {
     e.preventDefault()
     window.scrollTo({
       top: 0,
@@ -150,25 +160,25 @@ const errorMessage = document.getElementById('error-message');
 function showTemporaryMessage(element, duration = 5000) {
   [successMessage, errorMessage].forEach(msg => {
     msg.classList.remove('show-message');
-    msg.style.display = 'none'; 
+    msg.style.display = 'none';
   });
 
   element.style.display = 'block';
   setTimeout(() => {
     element.classList.add('show-message');
-  }, 10); 
+  }, 10);
 
   setTimeout(() => {
     element.classList.remove('show-message');
     setTimeout(() => {
       element.style.display = 'none';
-    }, 500); 
+    }, 500);
   }, duration);
 }
 
 if (form) {
   form.addEventListener("submit", function (event) {
-    event.preventDefault(); 
+    event.preventDefault();
 
     // Obtengo el token que genera Google al marcar "No soy un robot"
     const captchaToken = grecaptcha.getResponse();
@@ -203,7 +213,7 @@ if (form) {
           successMessage.textContent = "¡Mensaje enviado correctamente! Te contactaremos pronto.";
           showTemporaryMessage(successMessage);
           form.reset();
-          grecaptcha.reset(); 
+          grecaptcha.reset();
         } else {
           errorMessage.textContent = "Captcha inválido o error al enviar el correo.";
           showTemporaryMessage(errorMessage);
@@ -217,6 +227,6 @@ if (form) {
       })
       .finally(() => {
         submitButton.disabled = false;
-    });
+      });
   });
 }

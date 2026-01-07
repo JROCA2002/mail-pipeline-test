@@ -76,7 +76,7 @@
                             align-items-center lang-btn" href="#" data-lang="en"
                                 style="padding-right: 0px; color: black;" id="language-switch">
                                 <img src="assets/img/icon-english.png" style="height: 40px;" alt="English">
-                                <span>EN</span> 
+                                <span>EN</span>
                             </a>
                             <span>|</span>
                             <a class="nav-link d-inline-flex align-items-center justify-content-start lang-btn" href="#"
@@ -114,8 +114,10 @@
                                 muted playsinline></video>
                         </li> -->
                         <li class="glide__slide">
-                            <video id="video-muestra" src="./assets/videos/video-oficial.mp4" autoplay muted loop
-                                playsinline></video>
+                            <video id="video-muestra" src="./assets/videos/video-comprimido.mp4" autoplay muted loop
+                                playsinline >
+                                
+                            </video>
                         </li>
                         <!-- <li class="glide__slide">
                             <video src="./assets/videos/hero2.mp4" autoplay muted loop playsinline></video>
@@ -204,10 +206,10 @@
                 <div class="d-flex flex-column col-md-12 resume-item justify-content-center align-items-center">
                     <h2 class="pb-2 pt-2" data-translate="team">Nuestro equipo </h2>
 
-                    <div class="row justify-content-center">
+                    <div class="row justify-content-center pl-0 pr-0">
 
                         <!-- Miembro 1 -->
-                        <div class="d-flex flex-column col-6 col-sm-4 col-md-2 mb-4">
+                        <div class="d-flex flex-column col-6 col-sm-4 col-md-3 col-lg-2 mb-4">
                             <img src="./assets/img/equipo/FVF.jpg" class="img-fluid rounded-circle mb-2"
                                 alt="Facundo Vasquez Ferro">
                             <h6 class="name">Facundo Vásquez Ferro</h6>
@@ -215,7 +217,7 @@
                         </div>
 
                         <!-- Miembro 2 -->
-                        <div class="d-flex flex-column col-6 col-sm-4 col-md-2 mb-4">
+                        <div class="d-flex flex-column col-6 col-sm-4 col-md-3 col-lg-2 mb-4">
                             <img src="./assets/img/equipo/NQC.jpg" class="img-fluid rounded-circle mb-2"
                                 alt="Norberto Quirno Costa">
                             <h6 class="name">Norberto Quirno Costa</h6>
@@ -223,7 +225,7 @@
                         </div>
 
                         <!-- Miembro 3 -->
-                        <div class=" d-flex flex-column col-6 col-sm-4 col-md-2 mb-4">
+                        <div class=" d-flex flex-column col-6 col-sm-4 col-md-3 col-lg-2 mb-4">
                             <img src="./assets/img/equipo/ARF-v2.jpg" class="img-fluid rounded-circle mb-2"
                                 alt="Agustin Rodriguez Fodere">
                             <h6 class="name">Agustín Rodríguez Fodéré</h6>
@@ -231,7 +233,7 @@
                         </div>
 
                         <!-- Miembro 4 -->
-                        <div class="d-flex flex-column  col-6 col-sm-4 col-md-2 mb-4">
+                        <div class="d-flex flex-column d-sm-none d-md-flex col-6 col-sm-4 col-md-3 col-lg-2 mb-4" id="miembro4-fila1" >
                             <img src="./assets/img/equipo/NB.jpg" class="img-fluid rounded-circle mb-2"
                                 alt="Narcy Barrios">
                             <h6 class="name">Narcy Barrios</h6>
@@ -239,8 +241,15 @@
                         </div>
                     </div>
                     <div class="row justify-content-center">
+                        <!-- Miembro 4 -->
+                        <div class="d-flex flex-column d-none d-sm-flex d-md-none col-6 col-sm-4 col-md-3 col-lg-2 mb-4" id="miembro4-fila2">
+                            <img src="./assets/img/equipo/NB.jpg" class="img-fluid rounded-circle mb-2"
+                                alt="Narcy Barrios">
+                            <h6 class="name">Narcy Barrios</h6>
+                            <p class="role">Mid Office</p>
+                        </div>
                         <!-- Miembro 5 -->
-                        <div class="d-flex flex-column col-6 col-sm-4 col-md-2 mb-4">
+                        <div class="d-flex flex-column col-6 col-sm-4 col-md-3 col-lg-2 mb-4">
                             <img src="./assets/img/equipo/MR.jpg" class="img-fluid rounded-circle mb-2"
                                 alt="Michael Radicchi Aslund">
                             <h6 class="name">Michael Radicchi Aslund</h6>
@@ -248,7 +257,7 @@
                         </div>
 
                         <!-- Miembro 6 -->
-                        <div class="d-flex flex-column col-6 col-sm-4 col-md-2 mb-4">
+                        <div class="d-flex flex-column col-6 col-sm-4 col-md-3 col-lg-2 mb-4">
                             <img src="./assets/img/equipo/CP-IA.png" class="img-fluid rounded-circle mb-2"
                                 alt="Conrado Pittamiglio">
                             <h6 class="name">Conrado Pittamiglio</h6>
@@ -256,7 +265,7 @@
                         </div>
 
                         <!-- Miembro 7 -->
-                        <div class="d-flex flex-column col-6 col-sm-4 col-md-2 mb-4">
+                        <div class="d-flex flex-column col-6 col-sm-4 col-md-3 col-lg-2 mb-4">
                             <img src="./assets/img/equipo/JC.jpg" class="img-fluid rounded-circle mb-2"
                                 alt="Juan Sebastian Correa">
                             <h6 class="name">Juan Sebastián Correa</h6>
@@ -296,7 +305,7 @@
                         <div class="service-card">
                             <i class="bi bi-gear-wide-connected fs-1 text-white mb-3"></i>
                             <h5 class="fw-bold text-uppercase text-white" data-translate="metals">Metales</h5>
-                            <p class="text-light mb-0" data-translate="descriptionMetals">Amplia oferta de metales no 
+                            <p class="text-light mb-0" data-translate="descriptionMetals">Amplia oferta de metales no
                                 ferrosos para abastecer los diferentes segmentos
                                 del mercado.</p>
                             <div>
@@ -375,7 +384,7 @@
                             <div class="service-card">
                                 <i class="bi bi-truck-flatbed fs-1 text-white mb-3"></i>
                                 <h5 class="fw-bold text-uppercase text-white" data-translate="logistica">Logística</h5>
-                                <p class="text-light mb-0" data-translate="descriptionLogistica"> 
+                                <p class="text-light mb-0" data-translate="descriptionLogistica">
                                     Ofrecemos servicios logísticos intermodales en diferentes países del mundo.
                                 </p>
                             </div>
@@ -385,7 +394,8 @@
                         <div class="col-md-4">
                             <div class="service-card">
                                 <i class="bi bi-bank fs-1 text-white mb-3"></i>
-                                <h5 class="fw-bold text-uppercase text-white" data-translate="almacenamiento">Almacenamiento</h5>
+                                <h5 class="fw-bold text-uppercase text-white" data-translate="almacenamiento">
+                                    Almacenamiento</h5>
                                 <p class="text-light mb-0" data-translate="descriptionWarehousing">
                                     Trabajamos con depósitos globales para optimizar nuestras entregas.
                                 </p>
@@ -525,7 +535,7 @@
                 }
             });
         }, { threshold: 0.2 }); // se activa cuando el 20% del elemento es visible
-
+        
         cards.forEach((card, index) => {
             // Alterna animaciones izquierda / derecha
             if (index % 2 === 0) {
