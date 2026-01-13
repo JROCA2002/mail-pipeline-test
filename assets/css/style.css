@@ -343,20 +343,20 @@ h1,h2,h3,h4,h5,h6 {
 --------------------------------------------------------------*/
 #hero {
   width: 100%;
-  height: 85vh;
+  height: calc(95vh - 100px);
   background-size: cover;
   position: relative;
   padding: 0px;
 }
 
 #hero .hero-container {
-  width: 100vw;
+  width: 100%;
   margin: auto;
   position: relative;
   height: 100%;
   overflow: hidden;
 
-  video {
+  #video-muestra {
     width: 100%;
     height: 100%;
     display: block;
