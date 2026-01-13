@@ -232,4 +232,27 @@ if (form) {
         submitButton.disabled = false;
       });
   });
+
+  const cards = document.querySelectorAll('.service-card');
+
+  const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+          if (entry.isIntersecting) {
+              entry.target.classList.add('show');
+          }
+      });
+  }, { threshold: 0.2 }); // se activa cuando el 20% del elemento es visible
+
+  cards.forEach((card, index) => {
+      // Alterna animaciones izquierda / derecha
+      if (index % 2 === 0) {
+          card.classList.add('from-left');
+      } else {
+          card.classList.add('from-right');
+      }
+      observer.observe(card);
+  });
+
+  const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+  const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
 }
