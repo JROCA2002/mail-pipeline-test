@@ -104,36 +104,62 @@
     onscroll(document, toggleBacktotop)
   }
 
-  const navbarCollapse = document.getElementById('navbarNav');
-  const header = document.getElementById('header');
+  // const navbarCollapse = document.getElementById('navbarNav');
+  // const header = document.getElementById('header');
 
-  navbarCollapse.addEventListener('shown.bs.collapse', () => {
-    header.classList.add('menu-open');
-  });
+  // navbarCollapse.addEventListener('shown.bs.collapse', () => {
+  //   header.classList.add('menu-open');
+  // });
 
-  navbarCollapse.addEventListener('hidden.bs.collapse', (e) => {
-    e.preventDefault(); // frenamos el cierre inmediato
+  // navbarCollapse.addEventListener('hidden.bs.collapse', (e) => {
+  //   e.preventDefault(); // frenamos el cierre inmediato
+  //   header.classList.remove('menu-open');
+  //   // esperamos que termine la animación
+  //   setTimeout(() => {
+  //     bootstrap.Collapse.getInstance(navbarCollapse).hide();
+  //   }, 500); // mismo tiempo que el transition
+
+  // });
+
+  // // CERRAR AL CLICK EN LINKS (mobile)
+  // document.querySelectorAll('#navbarNav .nav-link').forEach(link => {
+  //   link.addEventListener('click', () => {
+  //     header.classList.remove('menu-open');
+
+  //     setTimeout(() => {
+  //       const instance = bootstrap.Collapse.getInstance(navbarCollapse);
+  //       if (instance) {
+  //         instance.hide();
+  //       }
+  //     }, 500);
+  //   });
+  // });
+
+
+const navbarCollapse = document.getElementById('navbarNav');
+const header = document.getElementById('header');
+
+navbarCollapse.addEventListener('shown.bs.collapse', () => {
+  header.classList.add('menu-open');
+});
+
+navbarCollapse.addEventListener('hidden.bs.collapse', () => {
+  header.classList.remove('menu-open');
+});
+
+// CERRAR AL CLICK EN LINKS (mobile)
+document.querySelectorAll('#navbarNav .nav-link').forEach(link => {
+  link.addEventListener('click', () => {
     header.classList.remove('menu-open');
-    // esperamos que termine la animación
+    
     setTimeout(() => {
-      bootstrap.Collapse.getInstance(navbarCollapse).hide();
-    }, 500); // mismo tiempo que el transition
-
+      const bsCollapse = bootstrap.Collapse.getInstance(navbarCollapse);
+      if (bsCollapse) {
+        bsCollapse.hide();
+      }
+    }, 200); 
   });
-
-  // CERRAR AL CLICK EN LINKS (mobile)
-  document.querySelectorAll('#navbarNav .nav-link').forEach(link => {
-    link.addEventListener('click', () => {
-      header.classList.remove('menu-open');
-
-      setTimeout(() => {
-        const instance = bootstrap.Collapse.getInstance(navbarCollapse);
-        if (instance) {
-          instance.hide();
-        }
-      }, 500);
-    });
-  });
+});
 
   on('click', '.back-to-top', function (e) {
     e.preventDefault()
