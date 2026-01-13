@@ -907,3 +907,15 @@ h1,h2,h3,h4,h5,h6 {
 #footer .location-text{
   color: #24458C;
 }
+
+.recaptcha-wrapper {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+@media (max-width: 360px) {
+  .g-recaptcha {
+    transform: scale(0.77);
+    transform-origin: left top;
+  }
+}
