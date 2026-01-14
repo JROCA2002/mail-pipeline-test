@@ -12,6 +12,9 @@
     <!-- Favicons -->
     <link href="./assets/img/logo-icono.png" rel="icon">
 
+    <!-- Fonts -->
+    <link rel="preload" href="./assets/fonts/Montserrat/Montserrat-Regular.woff2" as="font" type="font/woff2" crossorigin>
+    
     <!-- Vendor CSS Files -->
     <link href="./assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="./assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
@@ -22,17 +25,17 @@
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
     <!-- Script para Multilenguaje -->
-    <script src="./vendor/jquery/jquery.min.js"></script>
+    <script src="./assets/vendor/jquery/jquery.min.js" defer></script>
 </head>
 
-<body data-bs-spy="scroll" data-bs-target="#navbarmenu" data-bs-offset="120" tabindex="0">
+<body data-bs-spy="scroll" data-bs-target="#navbarmenu" data-bs-offset="110" tabindex="0">
     <header id="header" class="fixed-top">
         <nav id="navbarmenu" class="navbar navbar-expand-lg navbar-light pt-0 pb-0">
             <div class="container">
                 <!-- Logo -->
                 <a class="navbar-brand me-auto" href="#" id="navbar-logo">
-                    <img src="assets/img/logo-icono.png" alt="Electa trading Logo">
-                    <img src="assets/img/nombre-empresa.png" alt="Electa Trading" width="90">
+                    <img src="assets/img/logo-icono.png" alt="Electa trading Logo" fetchpriority="high">
+                    <img src="assets/img/nombre-empresa.png" alt="Electa Trading" fetchpriority="high" width="90">
                 </a>
 
                 <!-- Botón hamburguesa -->
@@ -76,7 +79,7 @@
     <section id="hero">
         <div class="hero-container">
             <video id="video-muestra" src="./assets/videos/20260112_video_hero_1080p.mp4" autoplay muted loop
-                playsinline >
+                playsinline>
             </video>
         </div>
     </section>
@@ -133,7 +136,7 @@
     <!-- Members Section -->
     <section id="members">
         <div class="container">
-            <div class="row" style="padding: 20px;">
+            <div class="row">
 
                 <div class="d-flex flex-column col-md-12 resume-item justify-content-center align-items-center">
                     <h2 class="pb-2 pt-2" data-translate="team">Nuestro equipo </h2>
@@ -396,7 +399,7 @@
                                 <textarea class="form-control" name="mensaje" rows="4" data-attr="placeholder"
                                     data-translate="labelMessage" placeholder="Mensaje (*)" required></textarea>
                             </div>
-                            <div class="mt-3">
+                            <div class="mt-3 recaptcha-wrapper">
 
                                 <!-- Widget del captcha -->
                                 <div class="g-recaptcha" data-sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI">
@@ -448,38 +451,10 @@
     </a>
 
     <!-- Vendor JS Files -->
-    <script src="./assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="./assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
-    <script src="./assets/vendor/waypoints/noframework.waypoints.js"></script>
+    <script src="./assets/vendor/bootstrap/js/bootstrap.bundle.min.js" defer></script>
     <!-- Template Main JS File -->
-    <script src="./assets/js/main.js"></script>
-    <script src="./assets/js/lang.js"></script>
-
-    <script>
-
-        const cards = document.querySelectorAll('.service-card');
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('show');
-                }
-            });
-        }, { threshold: 0.2 }); // se activa cuando el 20% del elemento es visible
-
-        cards.forEach((card, index) => {
-            // Alterna animaciones izquierda / derecha
-            if (index % 2 === 0) {
-                card.classList.add('from-left');
-            } else {
-                card.classList.add('from-right');
-            }
-            observer.observe(card);
-        });
-
-        const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
-        const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
-    </script>
+    <script src="./assets/js/lang.js" defer></script>
+    <script src="./assets/js/main.js" defer></script>
 </body>
 
 </html>
