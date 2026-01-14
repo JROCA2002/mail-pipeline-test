@@ -83,14 +83,6 @@ html {
   scroll-behavior: smooth !important;
 }
 
-/* Mobile */
-@media (max-width: 991px) {
-  html {
-    scroll-padding-top: 120px;
-    /* altura aproximada del navbar + menú desplegado */
-  }
-}
-
 a {
   color: #1c317a;
   text-decoration: none;
