@@ -78,9 +78,17 @@ body {
 /* Desktop / tablet */
 html {
   font-family: 'Montserrat', sans-serif;
-  scroll-padding-top: 110px;
+  scroll-padding-top: 100px;
   /* altura navbar en escritorio */
   scroll-behavior: smooth !important;
+}
+
+/* Mobile */
+@media (max-width: 991px) {
+  html {
+    scroll-padding-top: 100px;
+    /* altura aproximada del navbar + menú desplegado */
+  }
 }
 
 a {
@@ -167,7 +175,6 @@ h1,h2,h3,h4,h5,h6 {
 #header {
   overflow: hidden;
   z-index: 997;
-  transition: all 0.5s;
   background-color: #ffffff ; 
   position: fixed;
   top: 0;

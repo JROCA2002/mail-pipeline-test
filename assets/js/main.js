@@ -73,22 +73,6 @@
   }
 
   /**
-   * Toggle .header-scrolled class to #header when page is scrolled
-   */
-  let selectHeader = select('#header')
-  if (selectHeader) {
-    const headerScrolled = () => {
-      if (window.scrollY > 10) {
-        selectHeader.classList.add('header-scrolled')
-      } else {
-        selectHeader.classList.remove('header-scrolled')
-      }
-    }
-    window.addEventListener('load', headerScrolled)
-    onscroll(document, headerScrolled)
-  }
-
-  /**
    * Back to top button
    */
   let backtotop = select('.back-to-top')
@@ -104,83 +88,27 @@
     onscroll(document, toggleBacktotop)
   }
 
-  // const navbarCollapse = document.getElementById('navbarNav');
-  // const header = document.getElementById('header');
+  const navbarCollapse = document.getElementById('navbarNav');
+  const header = document.getElementById('header');
 
-  // navbarCollapse.addEventListener('shown.bs.collapse', () => {
-  //   header.classList.add('menu-open');
-  // });
+  navbarCollapse.addEventListener('show.bs.collapse', () => {
+    header.classList.add('menu-open');
+  });
 
-  // navbarCollapse.addEventListener('hidden.bs.collapse', (e) => {
-  //   e.preventDefault(); // frenamos el cierre inmediato
-  //   header.classList.remove('menu-open');
-  //   // esperamos que termine la animación
-  //   setTimeout(() => {
-  //     bootstrap.Collapse.getInstance(navbarCollapse).hide();
-  //   }, 500); // mismo tiempo que el transition
-
-  // });
-
-  // // CERRAR AL CLICK EN LINKS (mobile)
-  // document.querySelectorAll('#navbarNav .nav-link').forEach(link => {
-  //   link.addEventListener('click', () => {
-  //     header.classList.remove('menu-open');
-
-  //     setTimeout(() => {
-  //       const instance = bootstrap.Collapse.getInstance(navbarCollapse);
-  //       if (instance) {
-  //         instance.hide();
-  //       }
-  //     }, 500);
-  //   });
-  // });
-
-
-const navbarCollapse = document.getElementById('navbarNav');
-const header = document.getElementById('header');
-
-navbarCollapse.addEventListener('shown.bs.collapse', () => {
-  header.classList.add('menu-open');
-});
-
-navbarCollapse.addEventListener('hidden.bs.collapse', () => {
-  header.classList.remove('menu-open');
-});
-
-// CERRAR AL CLICK EN LINKS (mobile)
-document.querySelectorAll('#navbarNav .nav-link').forEach(link => {
-  link.addEventListener('click', () => {
+  navbarCollapse.addEventListener('hide.bs.collapse', () => {
     header.classList.remove('menu-open');
-    
-    setTimeout(() => {
+  });
+
+  // CERRAR AL CLICK EN LINKS (mobile)
+  document.querySelectorAll('#navbarNav .nav-link').forEach(link => {
+    link.addEventListener('click', () => {
       const bsCollapse = bootstrap.Collapse.getInstance(navbarCollapse);
       if (bsCollapse) {
         bsCollapse.hide();
       }
-    }, 200); 
+    });
   });
-});
-
-  on('click', '.back-to-top', function (e) {
-    e.preventDefault()
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth'
-    })
-  })
-
-  /**
-   * Scroll with ofset on page load with hash links in the url
-   */
-  window.addEventListener('load', () => {
-    if (window.location.hash) {
-      if (select(window.location.hash)) {
-        scrollto(window.location.hash)
-      }
-    }
-  });
-
-})()
+ })()
 
 const form = document.querySelector(".php-email-form");
 const successMessage = document.getElementById('success-message');
@@ -262,21 +190,21 @@ if (form) {
   const cards = document.querySelectorAll('.service-card');
 
   const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-          if (entry.isIntersecting) {
-              entry.target.classList.add('show');
-          }
-      });
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('show');
+      }
+    });
   }, { threshold: 0.2 }); // se activa cuando el 20% del elemento es visible
 
   cards.forEach((card, index) => {
-      // Alterna animaciones izquierda / derecha
-      if (index % 2 === 0) {
-          card.classList.add('from-left');
-      } else {
-          card.classList.add('from-right');
-      }
-      observer.observe(card);
+    // Alterna animaciones izquierda / derecha
+    if (index % 2 === 0) {
+      card.classList.add('from-left');
+    } else {
+      card.classList.add('from-right');
+    }
+    observer.observe(card);
   });
 
   const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
