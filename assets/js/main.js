@@ -158,7 +158,7 @@ if (form) {
       Mensaje: form.mensaje.value
     };
 
-    fetch("https://localhost:44347/API/EnviarMailDesdeLandingPage", {
+    fetch("http://localhost:7071/api/EnviarMailDesdeLandingPage", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data)
@@ -166,7 +166,7 @@ if (form) {
       .then(response => response.json())
       .then(result => {
 
-        if (result.result === 0) {
+        if (result.ok) {
           successMessage.textContent = "¡Mensaje enviado correctamente! Te contactaremos pronto.";
           showTemporaryMessage(successMessage);
           form.reset();
