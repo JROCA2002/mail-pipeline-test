@@ -149,6 +149,26 @@ if (form) {
     const submitButton = form.querySelector('.btn-primary');
     submitButton.disabled = true;
 
+    fetch("/api/TestMessage", {
+        method: 'GET', // Explicitly specifying GET (optional, since it's default)
+        headers: {
+            'Accept': 'application/json'
+        }
+    })
+    .then(response => {
+        // Check if the response is OK (status 200–299)
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json(); // Parse JSON response
+    })
+    .then(data => {
+        console.log('Fetched data:', data);
+    })
+    .catch(error => {
+        console.error('Fetch error:', error.message);
+    });
+
     const data = {
       Token: captchaToken,
       Nombre: form.nombre.value,
@@ -158,14 +178,14 @@ if (form) {
       Mensaje: form.mensaje.value
     };
 
-    fetch("http://localhost:7071/api/EnviarMailDesdeLandingPage", {
+    fetch("/api/EnviarMailDesdeLandingPage", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data)
     })
       .then(response => response.json())
       .then(result => {
-
+        console.log(result);
         if (result.ok) {
           successMessage.textContent = "¡Mensaje enviado correctamente! Te contactaremos pronto.";
           showTemporaryMessage(successMessage);

@@ -1,5 +1,3 @@
-using Azure.Core;
-using Grpc.Core;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
 using Microsoft.Extensions.Configuration;
@@ -7,8 +5,6 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System.Net;
 using System.Net.Mail;
-using System.Security.Cryptography;
-using System.Text;
 using System.Text.Json;
 
 namespace api
@@ -71,9 +67,17 @@ namespace api
             if (body == null || string.IsNullOrEmpty(body.Token))
                 return req.CreateResponse(HttpStatusCode.BadRequest);
 
-            string asunto = $"Contacto por ALUAR - {body.Nombre}";
+
+            string mailFrom = _mailOptions.MailFrom;
+
+            if (!string.IsNullOrEmpty(body.Email))
+            {
+                mailFrom = body.Email.Trim();
+            }
+            _logger.LogInformation($"Mail from: {mailFrom}");
+
             string cuerpo = $@"
-                    <h3>Nuevo mensaje desde el formulario web</h3>
+                    <h3>Nuevo mensaje desde el formulario de contacto</h3>
                     <p><strong>Nombre:</strong> {body.Nombre}</p>
                     <p><strong>Empresa:</strong> {body.Empresa}</p>
                     <p><strong>Email:</strong> {body.Email}</p>
@@ -84,8 +88,8 @@ namespace api
 
             var mMailMessage = new MailMessage
             {
-                From = new MailAddress(_mailOptions.MailFrom, "Landing Page"),
-                Subject = asunto,
+                From = new MailAddress(mailFrom, _mailOptions.MailFromTitulo),
+                Subject = _mailOptions.Subject,
                 Body = cuerpo,
                 IsBodyHtml = _mailOptions.IsBodyHtml,
                 Priority = MailPriority.Normal

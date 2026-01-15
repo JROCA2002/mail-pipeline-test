@@ -1,8 +1,11 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.Functions.Worker;
+using Microsoft.Azure.Functions.Worker.Http;
+using System.Net;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.Json;
 
 namespace api
 {
@@ -41,16 +44,22 @@ namespace api
         /// <param name="req"></param>
         /// <returns></returns>
         [Function("TestMessage")]
-        public IActionResult Run([HttpTrigger(AuthorizationLevel.Anonymous, "get", "post")] HttpRequest req)
+        public Task<HttpResponseData> Run(
+            [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "TestMessage")]
+            HttpRequestData req)
         {
-            string? name = req.Query["name"].FirstOrDefault();
-
-            return new JsonResult(new
+            // Create a response with status code 200 (OK)
+            var response = req.CreateResponse(HttpStatusCode.OK);
+            response.Headers.Add("Content-Type", "application/json; charset=utf-8");
+            
+            var model = new
             {
                 message = "Welcome to Azure Functions!",
                 random = GenerateRandomHex(30),
-                name
-            });
+                version = "1735"
+            };
+            response.WriteString(JsonSerializer.Serialize(model));
+            return Task.FromResult(response);
         }
 
     }

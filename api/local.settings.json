@@ -1,0 +1,25 @@
+{
+  "IsEncrypted": false,
+  "Values": {
+    "AzureWebJobsStorage": "UseDevelopmentStorage=true",
+    "FUNCTIONS_WORKER_RUNTIME": "dotnet-isolated",
+    "MailService:MailFrom": "info@codes.com.ar",
+    "MailService:MailFromTitulo": "Electa Trading",
+    "MailService:SmtpClient": "smtp-relay.gmail.com",
+    "MailService:SmtpClientPort": 587,
+    "MailService:SmtpClientEnableSSL": true,
+    "MailService:SmtpClientUseDefaultCredentials": false,
+    "MailService:IsBodyHtml": true,
+    "MailService:ProcessToken": "AQAAAAIAAYagAAAAEP1SZgadX6YFfu9Rg2Wp0JNsvwWOixaVh5i/+iUs0qPqOSaCNmOH39JIRuPin8dGFw==",
+    "MailService:MailTo": "rpalma@codes.com.ar",
+    "MailService:Subject": "Contacto por Electa Trading",
+    "Landing:UrlVerify": "https://www.google.com/recaptcha/api/siteverify",
+    "Landing:GoogleToken": "6LcoRkssAAAAADK59abJg4WwDQnXUge_zlWkubDf"
+  },
+  "Host": {
+    "LocalHttpPort": 7071,
+    "CORS": "http://127.0.0.1:5500",
+    "CORSCredentials": false
+  }
+}
+
