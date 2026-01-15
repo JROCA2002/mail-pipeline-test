@@ -51,9 +51,7 @@ namespace api
                 random = GenerateRandomHex(30),
                 name
             });
-
         }
-
 
     }
 }
