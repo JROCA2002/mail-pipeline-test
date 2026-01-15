@@ -2,12 +2,14 @@ using Azure.Core;
 using Grpc.Core;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System.Net;
 using System.Net.Mail;
+using System.Security.Cryptography;
+using System.Text;
 using System.Text.Json;
-using Microsoft.Extensions.Configuration;
 
 namespace api
 {
@@ -24,8 +26,13 @@ namespace api
             _config = config;
         }
 
+        
+
+
         [Function("EnviarMailDesdeLandingPage")]
-        public async Task<HttpResponseData> Run([HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "EnviarMailDesdeLandingPage")] HttpRequestData req)
+        public async Task<HttpResponseData> Run(
+            [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "EnviarMailDesdeLandingPage")] 
+            HttpRequestData req)
         {
             _logger.LogInformation("C# HTTP trigger function processed a request.");
 
