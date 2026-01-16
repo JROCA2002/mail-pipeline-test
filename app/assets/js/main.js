@@ -158,12 +158,14 @@ if (form) {
       Mensaje: form.mensaje.value
     };
 
-    fetch("/api/EnviarMailDesdeLandingPage", {
+    const urlEnvio = "http://localhost:7120/api/EnviarMailDesdeLandingPage";
+    fetch(urlEnvio, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data)
     })
-      .then(response => response.json())
+      .then(response => response.json()
+      )
       .then(result => {
         console.log(result);
         if (result.ok) {
@@ -210,8 +212,10 @@ if (form) {
   const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
   const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
 
+  const urlConfig = "http://localhost:7120/api/load_config";
+  
   setTimeout(() => {
-    fetch("/api/load_config", {
+    fetch(urlConfig, {
         method: 'GET', // Explicitly specifying GET (optional, since it's default)
         headers: {
             'Accept': 'application/json'
@@ -225,6 +229,14 @@ if (form) {
         return response.json(); // Parse JSON response
     })
     .then(data => {
+      const siteKey = data.captcha_key;
+      if (!siteKey) {
+        throw new Error("Captcha key not found in response");
+      }
+      // Render reCAPTCHA dynamically
+      grecaptcha.render("recaptcha-container", {
+        sitekey: siteKey
+      });
         console.log('Fetched data:', data);
     })
     .catch(error => {

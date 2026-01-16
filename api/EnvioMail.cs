@@ -39,9 +39,9 @@ namespace api
             _logger.LogInformation("C# HTTP trigger function processed a request.");
 
             var body = await JsonSerializer.DeserializeAsync<MailLandingPageRequest>(req.Body);
-            /*
-            string secretKey = _config["Landing:GoogleToken"];
-            string apiUrl = _config["Landing:UrlVerify"];
+
+            string secretKey = _landing_options.SecretKey;
+            string apiUrl = _landing_options.UrlVerify;
 
             string token = body?.Token;
 
@@ -68,11 +68,10 @@ namespace api
             {
                 return req.CreateResponse(HttpStatusCode.BadRequest);
             }
-            _logger.LogInformation("Captcha Valido");*/
+            _logger.LogInformation("Captcha Valido");
 
             if (body == null || string.IsNullOrEmpty(body.Token))
                 return req.CreateResponse(HttpStatusCode.BadRequest);
-
 
             string mailFrom = _mail_options.MailFrom;
 

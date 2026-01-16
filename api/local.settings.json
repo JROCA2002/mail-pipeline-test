@@ -14,7 +14,8 @@
     "MailService__MailTo": "rpalma@codes.com.ar",
     "MailService__Subject": "Contacto por Electa Trading",
     "Landing__UrlVerify": "https://www.google.com/recaptcha/api/siteverify",
-    "Landing__GoogleToken": "6LcoRkssAAAAADK59abJg4WwDQnXUge_zlWkubDf"
+    "Landing__GoogleToken": "6LcoRkssAAAAABt7_LEwg-sra3BotSJfkO7JFEBe",
+    "Landing__SecretKey": "6LcoRkssAAAAADK59abJg4WwDQnXUge_zlWkubDf"
   },
   "Host": {
     "LocalHttpPort": 7071,
