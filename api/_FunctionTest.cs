@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System.Net;
+using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
@@ -49,6 +50,21 @@ namespace api
             return sb.ToString(0, length);
         }
 
+        public static DateTime GetBuildDate(Assembly assembly)
+        {
+            try
+            {
+                string filePath = assembly.Location;
+                if (string.IsNullOrEmpty(filePath) || !File.Exists(filePath))
+                    return DateTime.MinValue;
+
+                return File.GetLastWriteTime(filePath);
+            }
+            catch
+            {
+                return DateTime.MinValue;
+            }
+        }
 
         /// <summary>
         /// 
@@ -59,21 +75,35 @@ namespace api
         /// </summary>
         /// <param name="req"></param>
         /// <returns></returns>
-        [Function("TestMessage")]
+        [Function("load_config")]
         public Task<HttpResponseData> Run(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "TestMessage")]
+            [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "load_config")]
             HttpRequestData req)
         {
+
+
+            Assembly assembly = Assembly.GetExecutingAssembly();
+
+            // Get version from AssemblyName
+            Version version = assembly.GetName().Version ?? new Version(0, 0, 0, 0);
+
+            // Get build date
+            DateTime buildDate = GetBuildDate(assembly);
+
+            // Format output
+            string build_info = $"Version {version} built on {buildDate:yyyy-MM-dd HH:mm}";
+
             // Create a response with status code 200 (OK)
             var response = req.CreateResponse(HttpStatusCode.OK);
             response.Headers.Add("Content-Type", "application/json; charset=utf-8");
 
             var model = new
             {
-                message = "Welcome to Azure Functions!",
+                message = "ELECTA STATIC WEB LANDING",
                 random = GenerateRandomHex(30),
-                version = "2236",
-                captcha_key = _landing_options.GoogleToken
+                version = "2254",
+                captcha_key = _landing_options.GoogleToken,
+                build_info = build_info
             };
             response.WriteString(JsonSerializer.Serialize(model));
             return Task.FromResult(response);
