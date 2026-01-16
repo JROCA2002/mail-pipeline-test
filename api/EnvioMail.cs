@@ -87,7 +87,7 @@ namespace api
                     <p><strong>Nombre:</strong> {body.Nombre}</p>
                     <p><strong>Empresa:</strong> {body.Empresa}</p>
                     <p><strong>Email:</strong> {body.Email}</p>
-                    <p><strong>Teléfono:</strong> {body.Telefono}</p>
+                    <p><strong>Tel&eacute;fono:</strong> {body.Telefono}</p>
                     <p><strong>Mensaje:</strong></p>
                     <p>{body.Mensaje}</p>
                 ";
