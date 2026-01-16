@@ -149,26 +149,6 @@ if (form) {
     const submitButton = form.querySelector('.btn-primary');
     submitButton.disabled = true;
 
-    fetch("/api/TestMessage", {
-        method: 'GET', // Explicitly specifying GET (optional, since it's default)
-        headers: {
-            'Accept': 'application/json'
-        }
-    })
-    .then(response => {
-        // Check if the response is OK (status 200–299)
-        if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        return response.json(); // Parse JSON response
-    })
-    .then(data => {
-        console.log('Fetched data:', data);
-    })
-    .catch(error => {
-        console.error('Fetch error:', error.message);
-    });
-
     const data = {
       Token: captchaToken,
       Nombre: form.nombre.value,
@@ -229,4 +209,27 @@ if (form) {
 
   const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
   const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+
+  setTimeout(() => {
+    fetch("/api/load_config", {
+        method: 'GET', // Explicitly specifying GET (optional, since it's default)
+        headers: {
+            'Accept': 'application/json'
+        }
+    })
+    .then(response => {
+        // Check if the response is OK (status 200–299)
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json(); // Parse JSON response
+    })
+    .then(data => {
+        console.log('Fetched data:', data);
+    })
+    .catch(error => {
+        console.error('Fetch error:', error.message);
+    });
+  }, 2000); // Esperar 2 segundos antes de hacer la solicitud
+
 }
