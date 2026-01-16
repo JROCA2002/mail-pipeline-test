@@ -1,5 +1,4 @@
-﻿using System;
-public class MailLandingPageRequest
+﻿public class MailLandingPageRequest
 {
     public string Token { get; set; }
     public string Nombre { get; set; }
@@ -8,7 +7,8 @@ public class MailLandingPageRequest
     public string Telefono { get; set; }
     public string Mensaje { get; set; }
 
-    public MailLandingPageRequest() { 
+    public MailLandingPageRequest()
+    {
         this.Token = string.Empty;
         this.Nombre = string.Empty;
         this.Empresa = string.Empty;
@@ -28,7 +28,7 @@ public class GoogleCaptchaResponse
     public GoogleCaptchaResponse()
     {
         this.Success = false;
-        this.Hostname = string.Empty; 
+        this.Hostname = string.Empty;
         this.ChallengeTs = DateTime.Now;
         this.ErrorCodes = new List<string>();
     }

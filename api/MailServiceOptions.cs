@@ -1,34 +1,25 @@
-public class LandingOptions
+namespace EnvioMail
 {
-    public LandingOptions()
+    public class MailServiceOptions
     {
-        this.UrlVerify = string.Empty;
-        this.GoogleToken = string.Empty;
+
+        public MailServiceOptions()
+        {
+            this.MailFrom = string.Empty;
+            this.MailTo = string.Empty;
+            this.SmtpClient = string.Empty;
+            this.Subject = string.Empty;
+            this.MailFromTitulo = string.Empty;
+        }
+
+        public string MailFrom { get; set; }
+        public string MailTo { get; set; }
+        public string SmtpClient { get; set; }
+        public int SmtpClientPort { get; set; }
+        public bool SmtpClientEnableSSL { get; set; }
+        public bool SmtpClientUseDefaultCredentials { get; set; }
+        public bool IsBodyHtml { get; set; }
+        public string Subject { get; set; }
+        public string MailFromTitulo { get; set; }
     }
-    public string UrlVerify { get; set; }
-    public string GoogleToken { get; set; }
-}
-
-
-public class MailServiceOptions
-{
-
-    public MailServiceOptions()
-    {
-        this.MailFrom = string.Empty;
-        this.MailTo = string.Empty;
-        this.SmtpClient = string.Empty;
-        this.Subject = string.Empty;
-        this.MailFromTitulo = string.Empty;
-    }
-
-    public string MailFrom { get; set; }
-    public string MailTo { get; set; }
-    public string SmtpClient { get; set; }
-    public int SmtpClientPort { get; set; }
-    public bool SmtpClientEnableSSL { get; set; }
-    public bool SmtpClientUseDefaultCredentials { get; set; }
-    public bool IsBodyHtml { get; set; }
-    public string Subject { get; set; }
-    public string MailFromTitulo { get; set; }
 }

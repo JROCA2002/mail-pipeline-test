@@ -1,3 +1,4 @@
+using EnvioMail;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
 using Microsoft.Extensions.Configuration;
@@ -12,22 +13,27 @@ namespace api
     public class EnviarMailDesdeLandingPage
     {
         private readonly ILogger _logger;
-        private readonly MailServiceOptions _mailOptions;
+        private readonly MailServiceOptions _mail_options;
+        private readonly LandingOptions _landing_options;
         private readonly IConfiguration _config;
 
-        public EnviarMailDesdeLandingPage(ILoggerFactory loggerFactory, IOptions<MailServiceOptions> options, IConfiguration config)
+        public EnviarMailDesdeLandingPage(ILoggerFactory loggerFactory,
+                IOptions<MailServiceOptions> options,
+                IOptions<LandingOptions> landing_options,
+                IConfiguration config)
         {
             _logger = loggerFactory.CreateLogger<EnviarMailDesdeLandingPage>();
-            _mailOptions = options.Value;
+            _mail_options = options.Value;
+            _landing_options = landing_options.Value;
             _config = config;
         }
 
-        
+
 
 
         [Function("EnviarMailDesdeLandingPage")]
         public async Task<HttpResponseData> Run(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "EnviarMailDesdeLandingPage")] 
+            [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "EnviarMailDesdeLandingPage")]
             HttpRequestData req)
         {
             _logger.LogInformation("C# HTTP trigger function processed a request.");
@@ -68,7 +74,7 @@ namespace api
                 return req.CreateResponse(HttpStatusCode.BadRequest);
 
 
-            string mailFrom = _mailOptions.MailFrom;
+            string mailFrom = _mail_options.MailFrom;
 
             if (!string.IsNullOrEmpty(body.Email))
             {
@@ -88,21 +94,21 @@ namespace api
 
             var mMailMessage = new MailMessage
             {
-                From = new MailAddress(mailFrom, _mailOptions.MailFromTitulo),
-                Subject = _mailOptions.Subject,
+                From = new MailAddress(mailFrom, _mail_options.MailFromTitulo),
+                Subject = _mail_options.Subject,
                 Body = cuerpo,
-                IsBodyHtml = _mailOptions.IsBodyHtml,
+                IsBodyHtml = _mail_options.IsBodyHtml,
                 Priority = MailPriority.Normal
             };
-            string to = _mailOptions.MailTo;
+            string to = _mail_options.MailTo;
             mMailMessage.To.Add(new MailAddress(to));
 
-      
-            var smtp = new SmtpClient(_mailOptions.SmtpClient)
+
+            var smtp = new SmtpClient(_mail_options.SmtpClient)
             {
-                Port = _mailOptions.SmtpClientPort,
-                EnableSsl = _mailOptions.SmtpClientEnableSSL,
-                UseDefaultCredentials = _mailOptions.SmtpClientUseDefaultCredentials,
+                Port = _mail_options.SmtpClientPort,
+                EnableSsl = _mail_options.SmtpClientEnableSSL,
+                UseDefaultCredentials = _mail_options.SmtpClientUseDefaultCredentials,
                 DeliveryMethod = SmtpDeliveryMethod.Network
             };
             try
@@ -114,7 +120,7 @@ namespace api
                 return ok;
 
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 _logger.LogError(ex, "Error enviando correo");
                 var error = req.CreateResponse(HttpStatusCode.InternalServerError);
