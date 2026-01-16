@@ -166,7 +166,7 @@ if (form) {
       .then(response => response.json()
       )
       .then(result => {
-        console.log(result);
+        // console.log(result);
         if (result.ok) {
           successMessage.textContent = "¡Mensaje enviado correctamente! Te contactaremos pronto.";
           showTemporaryMessage(successMessage);
@@ -185,7 +185,7 @@ if (form) {
         }
       })
       .catch(error => {
-        console.error("Error al procesar el formulario:", error);
+        // console.error("Error al procesar el formulario:", error);
         errorMessage.textContent = "Ocurrió un error de conexión.";
         showTemporaryMessage(errorMessage);
       })
