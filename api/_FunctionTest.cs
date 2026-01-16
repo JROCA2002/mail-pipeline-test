@@ -101,7 +101,6 @@ namespace api
             {
                 message = "ELECTA STATIC WEB LANDING",
                 random = GenerateRandomHex(30),
-                version = "2254",
                 captcha_key = _landing_options.GoogleToken,
                 build_info = build_info
             };
