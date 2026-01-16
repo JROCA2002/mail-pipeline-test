@@ -11,7 +11,7 @@
     "MailService__SmtpClientUseDefaultCredentials": false,
     "MailService__IsBodyHtml": true,
     "MailService__ProcessToken": "AQAAAAIAAYagAAAAEP1SZgadX6YFfu9Rg2Wp0JNsvwWOixaVh5i/+iUs0qPqOSaCNmOH39JIRuPin8dGFw==",
-    "MailService__MailTo": "rpalma@codes.com.ar",
+    "MailService__MailTo": "gmartinez@codes.com.ar",
     "MailService__Subject": "Contacto por Electa Trading",
     "Landing__UrlVerify": "https://www.google.com/recaptcha/api/siteverify",
     "Landing__GoogleToken": "6LcoRkssAAAAABt7_LEwg-sra3BotSJfkO7JFEBe",

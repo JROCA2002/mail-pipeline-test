@@ -158,7 +158,7 @@ if (form) {
       Mensaje: form.mensaje.value
     };
 
-    const urlEnvio = "http://localhost:7120/api/EnviarMailDesdeLandingPage";
+    const urlEnvio = "/api/EnviarMailDesdeLandingPage";
     fetch(urlEnvio, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -174,14 +174,20 @@ if (form) {
           form.reset();
           grecaptcha.reset();
         } else {
-          errorMessage.textContent = "Captcha inválido o error al enviar el correo.";
+          if(result.status === 400) {
+            errorMessage.textContent = "Error al validar el Captcha.";
+            showTemporaryMessage(errorMessage);
+            grecaptcha.reset();
+            return;
+          }
+          errorMessage.textContent = "Error al enviar el correo.";
           showTemporaryMessage(errorMessage);
           grecaptcha.reset();
         }
       })
       .catch(error => {
-        console.error("Error al procesar el formulario:");
-        errorMessage.textContent = "Ocurrió un error de conexión al enviar el formulario.";
+        console.error("Error al procesar el formulario:", error);
+        errorMessage.textContent = "Ocurrió un error de conexión.";
         showTemporaryMessage(errorMessage);
       })
       .finally(() => {
@@ -212,7 +218,7 @@ if (form) {
   const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
   const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
 
-  const urlConfig = "http://localhost:7120/api/load_config";
+  const urlConfig = "/api/load_config";
   
   setTimeout(() => {
     fetch(urlConfig, {

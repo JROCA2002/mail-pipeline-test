@@ -66,7 +66,9 @@ namespace api
 
             if (!captchaResponse.Success)
             {
-                return req.CreateResponse(HttpStatusCode.BadRequest);
+                var badCaptcha = req.CreateResponse(HttpStatusCode.BadRequest);
+                await badCaptcha.WriteAsJsonAsync(new { error = "Captcha invalido", status = HttpStatusCode.BadRequest });
+                return badCaptcha;
             }
             _logger.LogInformation("Captcha Valido");
 
@@ -123,7 +125,7 @@ namespace api
             {
                 _logger.LogError(ex, "Error enviando correo");
                 var error = req.CreateResponse(HttpStatusCode.InternalServerError);
-                await error.WriteAsJsonAsync(new { error = ex.Message });
+                await error.WriteAsJsonAsync(new { error = ex.Message, status =  HttpStatusCode.InternalServerError});
                 return error;
             }
 
