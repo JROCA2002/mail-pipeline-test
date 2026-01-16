@@ -158,8 +158,7 @@ if (form) {
       Mensaje: form.mensaje.value
     };
 
-    const urlEnvio = "/api/EnviarMailDesdeLandingPage";
-    fetch(urlEnvio, {
+    fetch("/api/EnviarMailDesdeLandingPage", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data)
@@ -218,10 +217,8 @@ if (form) {
   const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
   const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
 
-  const urlConfig = "/api/load_config";
-  
   setTimeout(() => {
-    fetch(urlConfig, {
+    fetch("/api/load_config", {
         method: 'GET', // Explicitly specifying GET (optional, since it's default)
         headers: {
             'Accept': 'application/json'
