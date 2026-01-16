@@ -9,6 +9,7 @@ var host = new HostBuilder()
         services.AddApplicationInsightsTelemetryWorkerService();
         services.ConfigureFunctionsApplicationInsights();
         services.Configure<MailServiceOptions>(context.Configuration.GetSection("MailService"));
+        services.Configure<LandingOptions>(context.Configuration.GetSection("Landing"));
     })
     .Build();
 
