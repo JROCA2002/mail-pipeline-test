@@ -31,7 +31,6 @@
   background-color: rgba(255, 255, 255, 0.1);
   border-radius: 1rem;
   padding: 2rem 1rem;
-  transition: all 0.3s ease;
   height: 100%;
   opacity: 0;
   transform: translateY(40px);
@@ -64,6 +63,7 @@
 .service-card:hover {
   background-color: rgba(255, 255, 255, 0.2);
   transform: translateY(-5px);
+
 }
 
 /*--------------------------------------------------------------
@@ -621,9 +621,6 @@ h1,h2,h3,h4,h5,h6 {
   }
 }
 
-@media only screen and (min-width: 576px) and (max-width: 768px) {
-
-}
 @media (max-width: 1200px) 
 {
   #members {
@@ -674,7 +671,6 @@ h1,h2,h3,h4,h5,h6 {
 }
 
 .contact p {
-  padding: 0;
   line-height: 24px;
   font-size: 16px;
   margin-bottom: 0;
@@ -778,10 +774,8 @@ h1,h2,h3,h4,h5,h6 {
 .contact .php-email-form textarea {
   border-radius: 0;
   box-shadow: none;
-  font-size: 14px;
   border: none;
   border-bottom: 1px solid #f4f4f4;
-  border-radius: 0;
   padding: 8px 4px;
   width: 100%;
   font-size: 16px;
@@ -789,8 +783,8 @@ h1,h2,h3,h4,h5,h6 {
   transition: border-color 0.3s;
 }
 
-.contact .php-email-form input::focus,
-.contact .php-email-form textarea::focus {
+.contact .php-email-form input:focus,
+.contact .php-email-form textarea:focus {
   background-color: #242F5C;
 }
 
@@ -866,24 +860,12 @@ h1,h2,h3,h4,h5,h6 {
   margin: 0;
 }
 
+
+
+
+
 #footer .social-links {
   margin: 0;
-}
-
-#footer .social-links a {
-  font-size: 18px;
-  display: inline-block;
-  line-height: 1;
-  padding: 8px 0;
-  margin-right: 4px;
-  border-radius: 50%;
-  text-align: center;
-  width: 36px;
-  height: 36px;
-  transition: 0.3s;
-}
-
-#footer .social-links {
   margin-top: 10px;
   display: flex;
   justify-content: center;
@@ -895,8 +877,14 @@ h1,h2,h3,h4,h5,h6 {
   color: #24458C;
   line-height: 1;
   margin: 0 8px;
+  padding: 8px 0;
+  border-radius: 50%;
+  text-align: center;
+  width: 36px;
+  height: 36px;
   transition: 0.3s;
 }
+
 
 #footer .social-links a:hover {
   color: #1c317a;

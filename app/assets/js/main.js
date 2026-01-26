@@ -13,19 +13,7 @@
     }
   }
 
-  /**
-   * Easy event listener function
-   */
-  const on = (type, el, listener, all = false) => {
-    let selectEl = select(el, all)
-    if (selectEl) {
-      if (all) {
-        selectEl.forEach(e => e.addEventListener(type, listener))
-      } else {
-        selectEl.addEventListener(type, listener)
-      }
-    }
-  }
+
 
   /**
    * Easy on scroll event listener 
@@ -54,23 +42,7 @@
   window.addEventListener('load', navbarlinksActive)
   onscroll(document, navbarlinksActive)
 
-  /**
-   * Scrolls to an element with header offset
-   */
-  const scrollto = (el) => {
-    let header = select('#header')
-    let offset = header.offsetHeight
 
-    if (!header.classList.contains('header-scrolled')) {
-      offset -= 20
-    }
-
-    let elementPos = select(el).offsetTop
-    window.scrollTo({
-      top: elementPos - offset,
-      behavior: 'smooth'
-    })
-  }
 
   /**
    * Back to top button
@@ -194,7 +166,7 @@ if (form) {
       .then(response => response.json()
       )
       .then(result => {
-        // console.log(result);
+       
         if (result.ok) {
           successMessage.textContent = "¡Mensaje enviado correctamente! Te contactaremos pronto.";
           showTemporaryMessage(successMessage);
@@ -213,7 +185,7 @@ if (form) {
         }
       })
       .catch(error => {
-        // console.error("Error al procesar el formulario:", error);
+        
         errorMessage.textContent = "Ocurrió un error de conexión.";
         showTemporaryMessage(errorMessage);
       })
@@ -242,8 +214,9 @@ if (form) {
     observer.observe(card);
   });
 
-  const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
-  const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+  const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+[...tooltipTriggerList].forEach(el => new bootstrap.Tooltip(el));
+
 
   setTimeout(() => {
     fetch("/api/load_config", {
