@@ -11,6 +11,8 @@ var host = new HostBuilder()
         services.ConfigureFunctionsApplicationInsights();
         services.Configure<MailServiceOptions>(context.Configuration.GetSection("MailService"));
         services.Configure<LandingOptions>(context.Configuration.GetSection("Landing"));
+        services.AddHttpClient();
+        services.Configure<GraphMailOptions>(context.Configuration.GetSection("Graph"));
     })
     .Build();
 
