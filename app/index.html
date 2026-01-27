@@ -6,15 +6,18 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
     <title>Electa Trading</title>
-    <meta content="Electa trading es una sociedad controlada por Aluar, Aluminios Argentinos. La misma fue creada en 2022 con el objetivo de brindar soluciones a clientes finales de la industria del Aluminio y otros commodities. Principalmente ofreciendo servicio, logística y financiación." name="description">
+    <meta
+        content="Electa trading es una sociedad controlada por Aluar, Aluminios Argentinos. La misma fue creada en 2022 con el objetivo de brindar soluciones a clientes finales de la industria del Aluminio y otros commodities. Principalmente ofreciendo servicio, logística y financiación."
+        name="description">
     <meta content="industria de aluminios" name="keywords">
 
     <!-- Favicons -->
     <link href="./assets/img/logo-icono.png" rel="icon">
 
     <!-- Fonts -->
-    <link rel="preload" href="./assets/fonts/Montserrat/Montserrat-Regular.woff2" as="font" type="font/woff2" crossorigin>
-    
+    <link rel="preload" href="./assets/fonts/Montserrat/Montserrat-Regular.woff2" as="font" type="font/woff2"
+        crossorigin>
+
     <!-- Vendor CSS Files -->
     <link href="./assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="./assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
@@ -28,7 +31,7 @@
     <script src="./assets/vendor/jquery/jquery.min.js" defer></script>
 </head>
 
-<body data-bs-spy="scroll" data-bs-target="#navbarmenu" data-bs-offset="110" tabindex="0">
+<body data-bs-spy="scroll" data-bs-target="#navbarmenu" data-bs-offset="110">
     <header id="header" class="fixed-top">
         <nav id="navbarmenu" class="navbar navbar-expand-lg navbar-light pt-0 pb-0">
             <div class="container">
@@ -78,9 +81,12 @@
     <!-- Hero Section -->
     <section id="hero">
         <div class="hero-container">
+
             <video id="video-muestra" src="./assets/videos/20260112_video_hero_1080p.mp4" autoplay muted loop
-                playsinline>
+                playsinline aria-hidden="true" tabindex="-1">
             </video>
+
+
         </div>
     </section>
     <!-- End Hero -->
@@ -387,8 +393,7 @@
                                         data-translate="labelCompany" placeholder="Empresa (*)" required>
                                 </div>
                                 <div class="col-md-6 form-group mt-3">
-                                    <input class="form-control" name="email" type="email" placeholder="Email"
-                                        >
+                                    <input class="form-control" name="email" type="email" placeholder="Email">
                                 </div>
                                 <div class="col-md-6 form-group mt-3">
                                     <input class="form-control" name="telefono" type="text" data-attr="placeholder"
@@ -423,7 +428,10 @@
             <div class="row mt-0 align-items-center">
 
                 <div class="col-12 col-md-4 text-center text-md-start mb-2 mb-md-0">
-                    <h3><img src="assets/img/logo.png" width="auto" height="70px" alt="Logo ElectaTrading"></h3>
+                    <h3 class="footer-title">
+                        <span class="visually-hidden">Electa Trading</span>
+                        <img src="assets/img/logo.png" height="70" alt="">
+                    </h3>
                 </div>
 
                 <div class="col-12 col-md-4 text-center text-md-end social-links">
@@ -457,4 +465,5 @@
     <script src="./assets/js/main.js" defer></script>
 </body>
 <!-- with skip app build / 202601152254-->
+
 </html>

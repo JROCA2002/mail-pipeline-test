@@ -132,11 +132,11 @@ function setLanguage(lang) {
     });
 }
 
-// Evento de botones
+
 $(".lang-btn").click(function () {
     const selectedLang = $(this).data("lang");
     setLanguage(selectedLang);
-    // localStorage.setItem("lang", selectedLang); // guardar preferencia
+   
 });
 
 /* Al cargar la página, usar idioma guardado

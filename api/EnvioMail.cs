@@ -1,3 +1,4 @@
+using api.Models;
 using EnvioMail;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
@@ -15,17 +16,20 @@ namespace api
         private readonly ILogger _logger;
         private readonly MailServiceOptions _mail_options;
         private readonly LandingOptions _landing_options;
-        private readonly IConfiguration _config;
+
+        private static readonly JsonSerializerOptions _jsonOptions = new JsonSerializerOptions
+        {
+            PropertyNameCaseInsensitive = true
+        };
 
         public EnviarMailDesdeLandingPage(ILoggerFactory loggerFactory,
                 IOptions<MailServiceOptions> options,
-                IOptions<LandingOptions> landing_options,
-                IConfiguration config)
+                IOptions<LandingOptions> landing_options)
         {
             _logger = loggerFactory.CreateLogger<EnviarMailDesdeLandingPage>();
             _mail_options = options.Value;
             _landing_options = landing_options.Value;
-            _config = config;
+           
         }
 
 
@@ -39,11 +43,13 @@ namespace api
             _logger.LogInformation("C# HTTP trigger function processed a request.");
 
             var body = await JsonSerializer.DeserializeAsync<MailLandingPageRequest>(req.Body);
+            if (body == null || string.IsNullOrWhiteSpace(body.Token))
+                return req.CreateResponse(HttpStatusCode.BadRequest);
 
             string secretKey = _landing_options.SecretKey;
             string apiUrl = _landing_options.UrlVerify;
 
-            string token = body?.Token;
+            string token = body.Token;
 
             var values = new Dictionary<string, string>
                 {
@@ -56,24 +62,20 @@ namespace api
             var response = await httpClient.PostAsync(apiUrl, content);
             var jsonString = await response.Content.ReadAsStringAsync();
 
-            var captchaResponse = System.Text.Json.JsonSerializer.Deserialize<GoogleCaptchaResponse>(
-                                    jsonString,
-                                    new JsonSerializerOptions
-                                    {
-                                        PropertyNameCaseInsensitive = true
-                                    });
+
+            var captchaResponse = JsonSerializer.Deserialize<GoogleCaptchaResponse>(jsonString, _jsonOptions);
 
 
-            if (!captchaResponse.Success)
+
+            if (captchaResponse?.Success != true)
             {
                 var badCaptcha = req.CreateResponse(HttpStatusCode.BadRequest);
                 await badCaptcha.WriteAsJsonAsync(new { error = "Captcha invalido", status = HttpStatusCode.BadRequest });
                 return badCaptcha;
             }
-            _logger.LogInformation("Captcha Valido");
+           
 
-            if (body == null || string.IsNullOrEmpty(body.Token))
-                return req.CreateResponse(HttpStatusCode.BadRequest);
+          
 
             string mailFrom = _mail_options.MailFrom;
 
@@ -81,7 +83,7 @@ namespace api
             {
                 mailFrom = body.Email.Trim();
             }
-            _logger.LogInformation($"Mail from: {mailFrom}");
+           
 
             string cuerpo = $@"
                     <h3>Nuevo mensaje desde el formulario de contacto</h3>
@@ -117,7 +119,7 @@ namespace api
                 await smtp.SendMailAsync(mMailMessage);
                 var ok = req.CreateResponse(HttpStatusCode.OK);
                 await ok.WriteAsJsonAsync(new { ok = true });
-                _logger.LogInformation($"Ejecutando {nameof(EnviarMailDesdeLandingPage)} Fin");
+                _logger.LogInformation("EnviarMailDesdeLandingPage finished successfully.");
                 return ok;
 
             }

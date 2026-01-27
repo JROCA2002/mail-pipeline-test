@@ -15,18 +15,14 @@ namespace api
     public class TestFunction
     {
 
-        private readonly ILogger _logger;
-        private readonly MailServiceOptions _mail_options;
         private readonly LandingOptions _landing_options;
-        private readonly IConfiguration _config;
+   
 
-        public TestFunction(ILoggerFactory loggerFactory, IOptions<MailServiceOptions> options,
-                IOptions<LandingOptions> landing_options, IConfiguration config)
+        public TestFunction(IOptions<LandingOptions> landing_options)
         {
-            _logger = loggerFactory.CreateLogger<EnviarMailDesdeLandingPage>();
-            _mail_options = options.Value;
+           
             _landing_options = landing_options.Value;
-            _config = config;
+           
         }
 
         public static string GenerateRandomHex(int length)
