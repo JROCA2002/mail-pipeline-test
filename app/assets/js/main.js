@@ -157,7 +157,7 @@ if (form) {
       return;
     }
 
-    fetch("/api/EnviarMailDesdeLandingPage", {
+    fetch("/api/EnviarMailDesdeLandingPageSwitch", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data)
