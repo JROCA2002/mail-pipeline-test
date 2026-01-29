@@ -110,7 +110,7 @@ namespace api
             var smtp = new SmtpClient(_mail_options.SmtpClient)
             {
                 Port = _mail_options.SmtpClientPort,
-                EnableSsl = _mail_options.SmtpClientEnableSSL, // true fijo 
+                EnableSsl = true, // FIJO DEBIDO A FALLA DE ANALISIS DE SONARQUBE // _mail_options.SmtpClientEnableSSL,
                 UseDefaultCredentials = _mail_options.SmtpClientUseDefaultCredentials,
                 DeliveryMethod = SmtpDeliveryMethod.Network
             };
