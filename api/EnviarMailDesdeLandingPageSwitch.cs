@@ -1,4 +1,5 @@
 using api.Models;
+using Azure.Core;
 using Azure.Identity;
 using EnvioMail;
 using Microsoft.Azure.Functions.Worker;
@@ -94,21 +95,35 @@ namespace api
 
             try
             {
-                if (provider == "GRAPH")
+                if (provider == "GRAPH_CLIENT" || provider == "GRAPH_MI")
                 {
-                    // ===== GRAPH =====
-                    if (string.IsNullOrWhiteSpace(_graph_options.TenantId) ||
-                        string.IsNullOrWhiteSpace(_graph_options.ClientId) ||
-                        string.IsNullOrWhiteSpace(_graph_options.ClientSecret) ||
-                        string.IsNullOrWhiteSpace(_graph_options.SenderUser))
+
+                    if (string.IsNullOrWhiteSpace(_graph_options.SenderUser))
                     {
                         var bad = req.CreateResponse(HttpStatusCode.InternalServerError);
                         await bad.WriteAsJsonAsync(new
                         {
-                            error = "Graph options incompletas (TenantId/ClientId/ClientSecret/SenderUser).",
+                            error = "Graph options incompletas (SenderUser).",
                             status = HttpStatusCode.InternalServerError
                         });
                         return bad;
+                    }
+
+                    // Solo para GRAPH (con secret) valido Tenant/Client/Secret
+                    if (provider == "GRAPH_CLIENT")
+                    {
+                        if (string.IsNullOrWhiteSpace(_graph_options.TenantId) ||
+                            string.IsNullOrWhiteSpace(_graph_options.ClientId) ||
+                            string.IsNullOrWhiteSpace(_graph_options.ClientSecret))
+                        {
+                            var bad = req.CreateResponse(HttpStatusCode.InternalServerError);
+                            await bad.WriteAsJsonAsync(new
+                            {
+                                error = "Graph options incompletas (TenantId/ClientId/ClientSecret).",
+                                status = HttpStatusCode.InternalServerError
+                            });
+                            return bad;
+                        }
                     }
 
                     var message = new Message
@@ -140,12 +155,18 @@ namespace api
                         };
                     }
 
-                    var credential = new ClientSecretCredential(
-                        _graph_options.TenantId,
-                        _graph_options.ClientId,
-                        _graph_options.ClientSecret);
+                    TokenCredential credential =
+         provider == "GRAPH_MI"
+             ? new DefaultAzureCredential()
+             : new ClientSecretCredential(
+                 _graph_options.TenantId,
+                 _graph_options.ClientId,
+                 _graph_options.ClientSecret);
 
-                    var graphClient = new GraphServiceClient(credential);
+                    var graphClient = new GraphServiceClient(
+     credential,
+     new[] { "https://graph.microsoft.com/.default" }
+ );
 
                     await graphClient.Users[_graph_options.SenderUser]
                         .SendMail
@@ -157,40 +178,47 @@ namespace api
 
                     var ok = req.CreateResponse(HttpStatusCode.OK);
                     await ok.WriteAsJsonAsync(new { ok = true });
-                    _logger.LogInformation("Mail sent successfully via GRAPH.");
+                    _logger.LogInformation("Mail sent successfully via {Provider}.", provider);
                     return ok;
                 }
-
-                // ===== SMTP (default) =====
-                string mailFrom = _mail_options.MailFrom;
-                if (!string.IsNullOrWhiteSpace(body.Email))
-                    mailFrom = body.Email.Trim();
-
-                using var mMailMessage = new MailMessage
+                else
                 {
-                    From = new MailAddress(mailFrom, _mail_options.MailFromTitulo),
-                    Subject = _mail_options.Subject,
-                    Body = cuerpo,
-                    IsBodyHtml = _mail_options.IsBodyHtml,
-                    Priority = MailPriority.Normal
-                };
 
-                mMailMessage.To.Add(new MailAddress(_mail_options.MailTo));
+                    // ===== SMTP (default) =====
+                    string mailFrom = _mail_options.MailFrom;
 
-                using var smtp = new SmtpClient(_mail_options.SmtpClient)
-                {
-                    Port = _mail_options.SmtpClientPort,
-                    EnableSsl = true, // FIJO DEBIDO A FALLA DE ANALISIS DE SONARQUBE // _mail_options.SmtpClientEnableSSL,
-                    UseDefaultCredentials = _mail_options.SmtpClientUseDefaultCredentials,
-                    DeliveryMethod = SmtpDeliveryMethod.Network
-                };
+                    using var mMailMessage = new MailMessage
+                    {
+                        From = new MailAddress(mailFrom, _mail_options.MailFromTitulo),
+                        Subject = _mail_options.Subject,
+                        Body = cuerpo,
+                        IsBodyHtml = _mail_options.IsBodyHtml,
+                        Priority = MailPriority.Normal
+                    };
 
-                await smtp.SendMailAsync(mMailMessage);
+                    mMailMessage.To.Add(new MailAddress(_mail_options.MailTo));
 
-                var okSmtp = req.CreateResponse(HttpStatusCode.OK);
-                await okSmtp.WriteAsJsonAsync(new { ok = true });
-                _logger.LogInformation("Mail sent successfully via SMTP.");
-                return okSmtp;
+                    // Reply-To para que el destinatario responda al usuario
+                    if (!string.IsNullOrWhiteSpace(body.Email))
+                    {
+                        mMailMessage.ReplyToList.Add(new MailAddress(body.Email.Trim()));
+                    }
+
+                    using var smtp = new SmtpClient(_mail_options.SmtpClient)
+                    {
+                        Port = _mail_options.SmtpClientPort,
+                        EnableSsl = true, // FIJO POR SONARQUBE
+                        UseDefaultCredentials = _mail_options.SmtpClientUseDefaultCredentials,
+                        DeliveryMethod = SmtpDeliveryMethod.Network
+                    };
+
+                    await smtp.SendMailAsync(mMailMessage);
+
+                    var okSmtp = req.CreateResponse(HttpStatusCode.OK);
+                    await okSmtp.WriteAsJsonAsync(new { ok = true });
+                    _logger.LogInformation("Mail sent successfully via SMTP.");
+                    return okSmtp;
+                }
             }
             catch (Exception ex)
             {
