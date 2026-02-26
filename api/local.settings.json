@@ -11,16 +11,16 @@
     "MailService__SmtpClientUseDefaultCredentials": false,
     "MailService__IsBodyHtml": true,
     "MailService__ProcessToken": "AQAAAAIAAYagAAAAEP1SZgadX6YFfu9Rg2Wp0JNsvwWOixaVh5i/+iUs0qPqOSaCNmOH39JIRuPin8dGFw==",
-    "MailService__MailTo": "gmartinez@codes.com.ar",
+    "MailService__MailTo": "dcastro@codes.com.ar",
     "MailService__Subject": "Contacto por Electa Trading",
     "Landing__UrlVerify": "https://www.google.com/recaptcha/api/siteverify",
-    "Landing__GoogleToken": "6LcoRkssAAAAABt7_LEwg-sra3BotSJfkO7JFEBe",
-    "Landing__SecretKey": "6LcoRkssAAAAADK59abJg4WwDQnXUge_zlWkubDf",
+    "Landing__GoogleToken": "6LcTvXgsAAAAAPSJ00JEkfk2NUm6wc3TiipC7Nog",
+    "Landing__SecretKey": "6LcTvXgsAAAAAMOIubiW4uFflH_B9VGyYnFs4nY9",
     "MailProvider": "SMTP",
     "Graph__TenantId": "ceb5d114-c4f8-4280-8abf-16de0f825527",
     "Graph__ClientId": "14924d3e-29af-4853-b916-3d848c8eb09c",
     "Graph__ClientSecret": "aBe******************",
-    "Graph__SenderUser": "info@codes.com.ar"
+    "Graph__SenderUser": "notificaciones@electatrading.com"
   },
   "Host": {
     "LocalHttpPort": 7071,
