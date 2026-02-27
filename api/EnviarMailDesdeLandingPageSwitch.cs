@@ -155,18 +155,14 @@ namespace api
                         };
                     }
 
-                    TokenCredential credential =
-         provider == "GRAPH_MI"
-             ? new DefaultAzureCredential()
-             : new ClientSecretCredential(
-                 _graph_options.TenantId,
-                 _graph_options.ClientId,
-                 _graph_options.ClientSecret);
+                    TokenCredential credential = provider == "GRAPH_MI"
+                                     ? new DefaultAzureCredential()
+                                     : new ClientSecretCredential(
+                                         _graph_options.TenantId,
+                                         _graph_options.ClientId,
+                                         _graph_options.ClientSecret);
 
-                    var graphClient = new GraphServiceClient(
-     credential,
-     new[] { "https://graph.microsoft.com/.default" }
- );
+                    var graphClient = new GraphServiceClient(credential, new[] { "https://graph.microsoft.com/.default" });
 
                     await graphClient.Users[_graph_options.SenderUser]
                         .SendMail

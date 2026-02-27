@@ -29,7 +29,6 @@ namespace api
             _logger = loggerFactory.CreateLogger<EnviarMailDesdeLandingPage>();
             _mail_options = options.Value;
             _landing_options = landing_options.Value;
-           
         }
 
 

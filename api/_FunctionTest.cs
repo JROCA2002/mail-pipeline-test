@@ -16,13 +16,17 @@ namespace api
     {
 
         private readonly LandingOptions _landing_options;
-   
+        private readonly IConfiguration _configuration;
+        private readonly MailServiceOptions _mail_options;
 
-        public TestFunction(IOptions<LandingOptions> landing_options)
+
+        public TestFunction(IOptions<LandingOptions> landing_options, 
+                IConfiguration configuration, 
+                IOptions<MailServiceOptions> mailOptions)
         {
-           
             _landing_options = landing_options.Value;
-           
+            _configuration = configuration;
+            _mail_options = mailOptions.Value;
         }
 
         public static string GenerateRandomHex(int length)
@@ -77,6 +81,7 @@ namespace api
             HttpRequestData req)
         {
 
+            string provider = (_configuration["MailProvider"] ?? "SMTP").Trim().ToUpperInvariant();
 
             Assembly assembly = Assembly.GetExecutingAssembly();
 
@@ -97,7 +102,12 @@ namespace api
             {
                 message = "ELECTA STATIC WEB LANDING",
                 random = GenerateRandomHex(30),
-                captcha_key = _landing_options.GoogleToken,
+                mail_provider = provider,
+                mail_options = _mail_options,
+                landing_options = _landing_options,
+                mail_to = _mail_options.MailTo, 
+                mail_subject = _mail_options.Subject,
+                version = "20260227-1006",
                 build_info = build_info
             };
             response.WriteString(JsonSerializer.Serialize(model));
