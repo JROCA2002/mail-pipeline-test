@@ -16,7 +16,7 @@
     "Landing__UrlVerify": "https://www.google.com/recaptcha/api/siteverify",
     "Landing__GoogleToken": "6LcTvXgsAAAAAPSJ00JEkfk2NUm6wc3TiipC7Nog",
     "Landing__SecretKey": "6LcTvXgsAAAAAMOIubiW4uFflH_B9VGyYnFs4nY9",
-    "MailProvider": "SMTP",
+    "MailProvider": "GRAPH_CLIENT",
     "Graph__TenantId": "ceb5d114-c4f8-4280-8abf-16de0f825527",
     "Graph__ClientId": "14924d3e-29af-4853-b916-3d848c8eb09c",
     "Graph__ClientSecret": "aBe******************",

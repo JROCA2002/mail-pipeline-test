@@ -1,4 +1,3 @@
-using EnvioMail;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
 using Microsoft.Extensions.Configuration;
@@ -9,20 +8,32 @@ using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
+using Azure.Core;
+using Azure.Identity;
+using Microsoft.Graph;
+using EnvioMail.Options;
+using EnvioMail.Services.Interfaces;
+using System.Threading;
 
 namespace api
 {
     public class TestFunction
     {
-
         private readonly LandingOptions _landing_options;
-   
+        private readonly MailServiceOptions _mail_options;
+        private readonly GraphMailOptions _graph_options;
+        private readonly IAuthService _authService;
 
-        public TestFunction(IOptions<LandingOptions> landing_options)
+        public TestFunction(
+            IOptions<LandingOptions> landing_options,
+            IOptions<MailServiceOptions> mailOptions,
+            IOptions<GraphMailOptions> graphOptions,
+            IAuthService authService)
         {
-           
             _landing_options = landing_options.Value;
-           
+            _mail_options = mailOptions.Value;
+            _graph_options = graphOptions.Value;
+            _authService = authService;
         }
 
         public static string GenerateRandomHex(int length)
@@ -97,11 +108,139 @@ namespace api
             {
                 message = "ELECTA STATIC WEB LANDING",
                 random = GenerateRandomHex(30),
-                captcha_key = _landing_options.GoogleToken,
-                build_info = build_info
+                build_info = build_info,
+                captcha_options = _landing_options,
+                mail_options = new
+                {
+                    MailFrom = _mail_options.MailFrom,
+                    MailTo = _mail_options.MailTo,
+                },
+                _graph_options = _graph_options
             };
             response.WriteString(JsonSerializer.Serialize(model));
             return Task.FromResult(response);
+        }
+
+        [Function("status")]
+        public Task<HttpResponseData> Status(
+            [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "status")]
+            HttpRequestData req)
+        {
+            // Enumerate functions in the current assembly and try to extract routes when present
+            var assembly = Assembly.GetExecutingAssembly();
+            var endpoints = new List<object>();
+
+            foreach (var type in assembly.GetTypes())
+            {
+                foreach (var method in type.GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static))
+                {
+                    var funcAttr = method.GetCustomAttribute<FunctionAttribute>();
+                    if (funcAttr != null)
+                    {
+                        string functionName = funcAttr.Name ?? method.Name;
+                        string route = null;
+
+                        var parameters = method.GetParameters();
+                        foreach (var p in parameters)
+                        {
+                            var httpAttr = p.GetCustomAttribute<HttpTriggerAttribute>();
+                            if (httpAttr != null)
+                            {
+                                route = httpAttr.Route;
+                                break;
+                            }
+                        }
+
+                        endpoints.Add(new
+                        {
+                            function = functionName,
+                            route = string.IsNullOrEmpty(route) ? "(no route / default)" : route
+                        });
+                    }
+                }
+            }
+
+            var response = req.CreateResponse(HttpStatusCode.OK);
+            response.Headers.Add("Content-Type", "application/json; charset=utf-8");
+
+            var model = new
+            {
+                implemented = true,
+                message = "Function app is implemented",
+                endpoints = endpoints.DistinctBy(e => (e as dynamic).function).ToList()
+            };
+
+            response.WriteString(JsonSerializer.Serialize(model));
+            return Task.FromResult(response);
+        }
+
+
+        // TODO: Este método es de prueba, luego de las pruebas esto se elimina.
+        [Function("graph_auth")]
+        public async Task<HttpResponseData> GraphAuth(
+            [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "graph_auth")]
+            HttpRequestData req)
+        {
+            try
+            {
+                // Usar el servicio de autenticación para obtener el TokenCredential
+                TokenCredential credential = _authService.GetTokenCredential();
+
+                // Solicitar un AccessToken para Graph
+                var tokenRequest = new TokenRequestContext(new[] { "https://graph.microsoft.com/.default" });
+                var accessToken = await credential.GetTokenAsync(tokenRequest, CancellationToken.None);
+
+                // Intentar obtener información del usuario configurado (opcional)
+                object userInfo = null;
+                if (!string.IsNullOrWhiteSpace(_graph_options.SenderUser))
+                {
+                    try
+                    {
+                        var graphClient = new GraphServiceClient(credential);
+                        var user = await graphClient.Users[_graph_options.SenderUser].GetAsync();
+                        userInfo = new
+                        {
+                            id = user?.Id,
+                            displayName = user?.DisplayName,
+                            userPrincipalName = user?.UserPrincipalName
+                        };
+                    }
+                    catch (Exception gx)
+                    {
+                        userInfo = new { error = "Unable to fetch user", detail = gx.Message };
+                    }
+                }
+
+                var response = req.CreateResponse(HttpStatusCode.OK);
+
+                // Do not return secrets. Mask ClientId for output.
+                string maskedClientId = string.IsNullOrWhiteSpace(_graph_options.ClientId) ? "" : (_graph_options.ClientId.Length <= 8 ? "****" : _graph_options.ClientId.Substring(0, 4) + "..." + _graph_options.ClientId.Substring(_graph_options.ClientId.Length - 4));
+
+                await response.WriteAsJsonAsync(new
+                {
+                    success = true,
+                    message = "Authenticated to Microsoft Graph (token acquired)",
+                    expiresOn = accessToken.ExpiresOn,
+                    clientId = maskedClientId,
+                    senderUser = _graph_options.SenderUser,
+                    token = accessToken.Token,
+                    user = userInfo
+                });
+
+                return response;
+            }
+            catch (AuthenticationFailedException ex)
+            {
+                var response = req.CreateResponse(HttpStatusCode.Unauthorized);
+                await response.WriteAsJsonAsync(new { success = false, error = "Authentication failed", message = ex.Message , detail = ex.InnerException?.Message});
+                return response;
+            }
+            catch (Exception ex)
+            {
+                var response = req.CreateResponse(HttpStatusCode.InternalServerError);
+                await response.WriteAsJsonAsync(new { success = false, error = "Error acquiring token or calling Graph", detail = ex.Message });
+                return response;
+            }
         }
 
     }
