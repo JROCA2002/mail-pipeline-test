@@ -24,7 +24,7 @@
   },
   "Host": {
     "LocalHttpPort": 7071,
-    "CORS": "http://127.0.0.1:5500",
+    "CORS": "https://witty-sand-0b2ccc910-2.centralus.6.azurestaticapps.net",
     "CORSCredentials": false
   }
 }

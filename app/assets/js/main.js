@@ -13,6 +13,19 @@
     }
   }
 
+  /**
+   * Easy event listener function
+   */
+  const on = (type, el, listener, all = false) => {
+    let selectEl = select(el, all)
+    if (selectEl) {
+      if (all) {
+        selectEl.forEach(e => e.addEventListener(type, listener))
+      } else {
+        selectEl.addEventListener(type, listener)
+      }
+    }
+  }
 
   /**
    * Easy on scroll event listener 
@@ -41,7 +54,23 @@
   window.addEventListener('load', navbarlinksActive)
   onscroll(document, navbarlinksActive)
 
+  /**
+   * Scrolls to an element with header offset
+   */
+  const scrollto = (el) => {
+    let header = select('#header')
+    let offset = header.offsetHeight
 
+    if (!header.classList.contains('header-scrolled')) {
+      offset -= 20
+    }
+
+    let elementPos = select(el).offsetTop
+    window.scrollTo({
+      top: elementPos - offset,
+      behavior: 'smooth'
+    })
+  }
 
   /**
    * Back to top button
@@ -104,14 +133,6 @@ function showTemporaryMessage(element, duration = 5000) {
   }, duration);
 }
 
-function isEmpty(value) {
-  return value == null || String(value).trim() === '';
-}
-
-function validarTelefono(telefono) {
-  return telefono.length >= 8 && telefono.length <= 15 && /^\d+$/.test(telefono);
-}
-
 if (form) {
   form.addEventListener("submit", function (event) {
     event.preventDefault();
@@ -127,65 +148,38 @@ if (form) {
 
     const submitButton = form.querySelector('.btn-primary');
     submitButton.disabled = true;
+
     const data = {
       Token: captchaToken,
-      Nombre: form.nombre.value?.trim(),
-      Empresa: form.empresa.value?.trim(),
-      Email: form.email.value?.trim(),
-      Telefono: form.telefono.value?.trim(),
-      Mensaje: form.mensaje.value?.trim()
+      Nombre: form.nombre.value,
+      Empresa: form.empresa.value,
+      Email: form.email.value,
+      Telefono: form.telefono.value,
+      Mensaje: form.mensaje.value
     };
-    const emptyFields = [];
-
-    for (const key in data) {
-      if (key != "Email" && isEmpty(data[key])) {
-        emptyFields.push(key);
-      }
-    }
-
-    if(emptyFields.length > 0) {
-      errorMessage.textContent = "Por favor, completa todos los campos obligatorios.";
-      showTemporaryMessage(errorMessage);
-      submitButton.disabled = false;
-      return;
-    }
-
-    if (!validarTelefono(data.Telefono)) {
-      errorMessage.textContent = "Por favor, ingresa un número de teléfono válido.";
-      showTemporaryMessage(errorMessage);
-      submitButton.disabled = false;
-      return;
-    }
 
     fetch("/api/EnviarMailDesdeLandingPageSwitch", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data)
     })
-      .then(response => response.json()
-      )
+      .then(response => response.json())
       .then(result => {
-       
+        console.log(result);
         if (result.ok) {
           successMessage.textContent = "¡Mensaje enviado correctamente! Te contactaremos pronto.";
           showTemporaryMessage(successMessage);
           form.reset();
           grecaptcha.reset();
         } else {
-          if(result.status === 400) {
-            errorMessage.textContent = "Error al validar el Captcha.";
-            showTemporaryMessage(errorMessage);
-            grecaptcha.reset();
-            return;
-          }
-          errorMessage.textContent = "Error al enviar el correo.";
+          errorMessage.textContent = "Captcha inválido o error al enviar el correo.";
           showTemporaryMessage(errorMessage);
           grecaptcha.reset();
         }
       })
       .catch(error => {
-        
-        errorMessage.textContent = "Ocurrió un error de conexión.";
+        console.error("Error al procesar el formulario:");
+        errorMessage.textContent = "Ocurrió un error de conexión al enviar el formulario.";
         showTemporaryMessage(errorMessage);
       })
       .finally(() => {
@@ -213,9 +207,8 @@ if (form) {
     observer.observe(card);
   });
 
-  const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
-[...tooltipTriggerList].forEach(el => new bootstrap.Tooltip(el));
-
+  const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+  const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
 
   setTimeout(() => {
     fetch("/api/load_config", {
@@ -232,14 +225,6 @@ if (form) {
         return response.json(); // Parse JSON response
     })
     .then(data => {
-      const siteKey = data.captcha_key;
-      if (!siteKey) {
-        throw new Error("Captcha key not found in response");
-      }
-      // Render reCAPTCHA dynamically
-      grecaptcha.render("recaptcha-container", {
-        sitekey: siteKey
-      });
         console.log('Fetched data:', data);
     })
     .catch(error => {

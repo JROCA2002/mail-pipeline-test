@@ -88,6 +88,7 @@ namespace api
             HttpRequestData req)
         {
 
+            string provider = (_configuration["MailProvider"] ?? "SMTP").Trim().ToUpperInvariant();
 
             Assembly assembly = Assembly.GetExecutingAssembly();
 
