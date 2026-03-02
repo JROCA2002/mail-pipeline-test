@@ -1,4 +1,4 @@
-﻿namespace EnvioMail
+﻿namespace EnvioMail.Options
 {
     public class LandingOptions
     {
