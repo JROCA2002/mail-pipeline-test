@@ -22,9 +22,15 @@ namespace EnvioMail.Services
         {
             string provider = (_configuration["MailProvider"] ?? "SMTP").Trim().ToUpperInvariant();
 
+            bool useUserAssigned = false; // Change to true to use a user-assigned identity
+
+            ManagedIdentityId identityId = useUserAssigned
+                ? ManagedIdentityId.FromUserAssignedObjectId("YOUR-USER-ASSIGNED-CLIENT-ID")
+                : ManagedIdentityId.SystemAssigned;
+
             TokenCredential credential =
              provider == "GRAPH_MI"
-                 ? new DefaultAzureCredential()
+                 ? new ManagedIdentityCredential(identityId)
                  : new ClientSecretCredential(
                      _graph_options.TenantId,
                      _graph_options.ClientId,
