@@ -1,5 +1,6 @@
 using api.Models;
 using EnvioMail;
+using EnvioMail.Options;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
 using Microsoft.Extensions.Configuration;

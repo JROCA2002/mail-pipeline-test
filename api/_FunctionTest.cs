@@ -23,13 +23,15 @@ namespace api
         private readonly MailServiceOptions _mail_options;
         private readonly GraphMailOptions _graph_options;
         private readonly IAuthService _authService;
+        private readonly IConfiguration _configuration;
 
-        public TestFunction(
+        public TestFunction(IConfiguration configuration,
             IOptions<LandingOptions> landing_options,
             IOptions<MailServiceOptions> mailOptions,
             IOptions<GraphMailOptions> graphOptions,
             IAuthService authService)
         {
+            _configuration = configuration;
             _landing_options = landing_options.Value;
             _mail_options = mailOptions.Value;
             _graph_options = graphOptions.Value;
@@ -122,6 +124,8 @@ namespace api
             return Task.FromResult(response);
         }
 
+
+        // TODO: Este método es de prueba, luego de las pruebas esto se elimina.
         [Function("status")]
         public Task<HttpResponseData> Status(
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "status")]
@@ -139,7 +143,7 @@ namespace api
                     if (funcAttr != null)
                     {
                         string functionName = funcAttr.Name ?? method.Name;
-                        string route = null;
+                        string route = "";
 
                         var parameters = method.GetParameters();
                         foreach (var p in parameters)
@@ -147,7 +151,7 @@ namespace api
                             var httpAttr = p.GetCustomAttribute<HttpTriggerAttribute>();
                             if (httpAttr != null)
                             {
-                                route = httpAttr.Route;
+                                route = httpAttr.Route ?? "";
                                 break;
                             }
                         }
@@ -192,7 +196,7 @@ namespace api
                 var accessToken = await credential.GetTokenAsync(tokenRequest, CancellationToken.None);
 
                 // Intentar obtener información del usuario configurado (opcional)
-                object userInfo = null;
+                object? userInfo = null;
                 if (!string.IsNullOrWhiteSpace(_graph_options.SenderUser))
                 {
                     try
