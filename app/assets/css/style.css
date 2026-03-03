@@ -783,11 +783,6 @@ h1,h2,h3,h4,h5,h6 {
   transition: border-color 0.3s;
 }
 
-.contact .php-email-form input:focus,
-.contact .php-email-form textarea:focus {
-  background-color: #242F5C;
-}
-
 .contact .php-email-form input {
   padding: 10px 15px;
 }

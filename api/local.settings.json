@@ -22,7 +22,10 @@
     "Graph__TenantId": "***",
     "Graph__ClientId": "***",
     "Graph__ClientSecret": "***",
-    "Graph__SenderUser": "notificaciones@electatrading.com"
+    "Graph__SenderUser": "notificaciones@electatrading.com",
+    "Graph__UserAssignedIdentityResourceId": "",
+    "Graph__UserAssignedIdentityObjectId": "",
+    "Graph__UserAssignedIdentityClientId": ""
   },
   "Host": {
     "LocalHttpPort": 7071,

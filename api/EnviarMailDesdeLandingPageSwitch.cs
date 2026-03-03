@@ -80,13 +80,13 @@ namespace EnvioMail
             HttpResponseData response = req.CreateResponse();
             try
             {
-                if (provider == "GRAPH_CLIENT" || provider == "GRAPH_MI")
+                if (provider == "SMTP")
                 {
-                    await _mailService.SendEmailGraphAsync(body);
+                    await _mailService.SendEmailSmtpAsync(body);
                 }
                 else
                 {
-                    await _mailService.SendEmailSmtpAsync(body);
+                    await _mailService.SendEmailGraphAsync(body);
                 }
 
                 await response.WriteAsJsonAsync(new { ok = true });

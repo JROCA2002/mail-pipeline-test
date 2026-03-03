@@ -23,11 +23,6 @@ namespace EnvioMail.Services
         public TokenCredential GetTokenCredential()
         {
             string provider = (_configuration["MailProvider"] ?? "SMTP").Trim().ToUpperInvariant();
-
-            string client_id = (_configuration["Graph__ClientId"] ?? "SMTP").Trim().ToUpperInvariant();
-            string rid = (_configuration["Graph__ResourceId"] ?? "SMTP").Trim().ToUpperInvariant();
-            string oid = (_configuration["Graph__ObjectId"] ?? "SMTP").Trim().ToUpperInvariant();
-
             /*
             bool useUserAssigned = false; // Change to true to use a user-assigned identity
             var x1 = ManagedIdentityId.FromUserAssignedObjectId("YOUR-USER-ASSIGNED-CLIENT-ID")
@@ -37,43 +32,36 @@ namespace EnvioMail.Services
             ManagedIdentityId identityId = ManagedIdentityId.SystemAssigned;
             */
 
-            // TODO: mejorar el if para que quede mas claro
             TokenCredential? credential = null;
-
-            if (provider == "GRAPH_MANAGED_IDENTITY_SYSTEM_ASSIGNED"
-                || provider == "GRAPH_MI")
+            // TODO : Revisar logica
+            switch (provider)
             {
+                case "GRAPH_MANAGED_IDENTITY_SYSTEM_ASSIGNED":
+                case "GRAPH_MI":
+                    credential = new ManagedIdentityCredential(ManagedIdentityId.SystemAssigned);
+                    break;
 
-                credential = new ManagedIdentityCredential(ManagedIdentityId.SystemAssigned);
+                case "GRAPH_MANAGED_IDENTITY_RESOURCE_ID":
+                    credential = new ManagedIdentityCredential(
+                        ManagedIdentityId.FromUserAssignedResourceId(new ResourceIdentifier(_graph_options.UserAssignedIdentityResourceId)));
+                    break;
 
-            }
-            else if (provider == "GRAPH_MANAGED_IDENTITY_RESOURCE_ID")
-            {
+                case "GRAPH_MANAGED_IDENTITY_OBJECT_ID":
+                    credential = new ManagedIdentityCredential(
+                        ManagedIdentityId.FromUserAssignedObjectId(_graph_options.UserAssignedIdentityObjectId));
+                    break;
 
-                credential = new ManagedIdentityCredential(
-                        ManagedIdentityId.FromUserAssignedResourceId(new ResourceIdentifier(rid)));
+                case "GRAPH_MANAGED_IDENTITY_CLIENT_ID":
+                    credential = new ManagedIdentityCredential(
+                        ManagedIdentityId.FromUserAssignedClientId(_graph_options.UserAssignedIdentityClientId));
+                    break;
 
-            }
-            else if (provider == "GRAPH_MANAGED_IDENTITY_OBJECT_ID")
-            {
-
-                credential = new ManagedIdentityCredential(
-                        ManagedIdentityId.FromUserAssignedObjectId(oid));
-
-            }
-            else if (provider == "GRAPH_MANAGED_IDENTITY_CLIENT_ID")
-            {
-
-                credential = new ManagedIdentityCredential(
-                        ManagedIdentityId.FromUserAssignedClientId(client_id));
-
-            }
-            else
-            {
-                credential = new ClientSecretCredential(
+                default:
+                    credential = new ClientSecretCredential(
                         _graph_options.TenantId,
                         _graph_options.ClientId,
                         _graph_options.ClientSecret);
+                    break;
             }
 
             var graphClient = new GraphServiceClient(credential, new[] { "https://graph.microsoft.com/.default" });
