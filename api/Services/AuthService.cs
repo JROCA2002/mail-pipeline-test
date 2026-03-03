@@ -23,16 +23,9 @@ namespace EnvioMail.Services
         public TokenCredential GetTokenCredential()
         {
             string provider = (_configuration["MailProvider"] ?? "SMTP").Trim().ToUpperInvariant();
-            /*
-            bool useUserAssigned = false; // Change to true to use a user-assigned identity
-            var x1 = ManagedIdentityId.FromUserAssignedObjectId("YOUR-USER-ASSIGNED-CLIENT-ID")
-            ManagedIdentityId identityId = useUserAssigned
-                ? ManagedIdentityId.FromUserAssignedObjectId("YOUR-USER-ASSIGNED-CLIENT-ID")
-                : ManagedIdentityId.SystemAssigned;
-            ManagedIdentityId identityId = ManagedIdentityId.SystemAssigned;
-            */
-
+            
             TokenCredential? credential = null;
+            
             // TODO : Revisar logica
             switch (provider)
             {

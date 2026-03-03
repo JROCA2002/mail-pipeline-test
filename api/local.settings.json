@@ -17,8 +17,6 @@
     "Landing__GoogleToken": "6LcTvXgsAAAAAPSJ00JEkfk2NUm6wc3TiipC7Nog",
     "Landing__SecretKey": "6LcTvXgsAAAAAMOIubiW4uFflH_B9VGyYnFs4nY9",
     "MailProvider": "GRAPH_MANAGED_IDENTITY_SYSTEM_ASSIGNED",
-    "Graph__ObjectId": "a3ec7893-1b61-41e5-8544-43162c303424",
-    "Graph__ResourceId": "***",
     "Graph__TenantId": "***",
     "Graph__ClientId": "***",
     "Graph__ClientSecret": "***",
