@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.14.36121.58
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EnvioMail", "api\EnvioMail.csproj", "{78086806-4402-0FA7-7070-F0FA4E9B9693}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EnvioMail", "backend\EnvioMail.csproj", "{78086806-4402-0FA7-7070-F0FA4E9B9693}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
