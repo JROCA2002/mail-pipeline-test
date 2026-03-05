@@ -158,7 +158,7 @@ if (form) {
       Mensaje: form.mensaje.value
     };
 
-    fetch("/api/EnviarMailDesdeLandingPageSwitch", {
+    fetch("/api/EnvioMail", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data)
@@ -225,7 +225,38 @@ if (form) {
         return response.json(); // Parse JSON response
     })
     .then(data => {
+      const siteKey = data.captcha_options.GoogleToken;
+      if (!siteKey) {
+        throw new Error("Captcha key not found in response");
+      }
+      // Render reCAPTCHA dynamically
+      grecaptcha.render("recaptcha-container", {
+        sitekey: siteKey
+      });
         console.log('Fetched data:', data);
+    })
+    .catch(error => {
+        console.error('Fetch error:', error.message);
+    });
+  }, 2000); // Esperar 2 segundos antes de hacer la solicitud
+
+    // TODO : Este metodo es de prueba, luego BORRAR
+    setTimeout(() => {
+    fetch("/api/TestIntegration", {
+        method: 'GET', // Explicitly specifying GET (optional, since it's default)
+        headers: {
+            'Accept': 'application/json'
+        }
+    })
+    .then(response => {
+        // Check if the response is OK (status 200–299)
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json(); // Parse JSON response
+    })
+    .then(data => {
+        console.log('Fetched data de Azure Function MGraph:', data);
     })
     .catch(error => {
         console.error('Fetch error:', error.message);
