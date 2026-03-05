@@ -17,9 +17,6 @@ var host = new HostBuilder()
         services.Configure<LandingOptions>(context.Configuration.GetSection("Landing"));
         services.Configure<GraphMailOptions>(context.Configuration.GetSection("Graph"));
 
-        // --- HttpClient para Recaptcha ---
-        services.AddHttpClient();
-
         // --- Services ---
         services.AddScoped<IAuthService, AuthService>();
         services.AddScoped<IMailService, MailService>();

@@ -84,6 +84,9 @@ namespace api
         /// </summary>
         /// <param name="req"></param>
         /// <returns></returns>
+        /// 
+        // TODO: Este método es de prueba, luego de las pruebas esto se elimina.
+
         [Function("load_config")]
         public Task<HttpResponseData> Run(
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "load_config")]
@@ -109,10 +112,10 @@ namespace api
 
             var model = new
             {
-                message = "ELECTA STATIC WEB LANDING",
+                source = "AZURE FUNCTION MICROSOFT GRAPH",
                 random = GenerateRandomHex(30),
                 build_info = build_info,
-                captcha_options = _landing_options,
+                mail_provider = provider,
                 mail_options = new
                 {
                     MailFrom = _mail_options.MailFrom,
@@ -186,6 +189,7 @@ namespace api
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "graph_auth")]
             HttpRequestData req)
         {
+            HttpResponseData response = req.CreateResponse();
             try
             {
                 // Usar el servicio de autenticación para obtener el TokenCredential
@@ -216,34 +220,28 @@ namespace api
                     }
                 }
 
-                var response = req.CreateResponse(HttpStatusCode.OK);
-
-                // Do not return secrets. Mask ClientId for output.
-                string maskedClientId = string.IsNullOrWhiteSpace(_graph_options.ClientId) ? "" : (_graph_options.ClientId.Length <= 8 ? "****" : _graph_options.ClientId.Substring(0, 4) + "..." + _graph_options.ClientId.Substring(_graph_options.ClientId.Length - 4));
-
                 await response.WriteAsJsonAsync(new
                 {
                     success = true,
                     message = "Authenticated to Microsoft Graph (token acquired)",
                     expiresOn = accessToken.ExpiresOn,
-                    clientId = maskedClientId,
                     senderUser = _graph_options.SenderUser,
                     token = accessToken.Token,
                     user = userInfo
                 });
-
+                response.StatusCode = HttpStatusCode.OK;
                 return response;
             }
             catch (AuthenticationFailedException ex)
             {
-                var response = req.CreateResponse(HttpStatusCode.Unauthorized);
                 await response.WriteAsJsonAsync(new { success = false, error = "Authentication failed", message = ex.Message , detail = ex.InnerException?.Message});
+                response.StatusCode = HttpStatusCode.Unauthorized;
                 return response;
             }
             catch (Exception ex)
             {
-                var response = req.CreateResponse(HttpStatusCode.InternalServerError);
                 await response.WriteAsJsonAsync(new { success = false, error = "Error acquiring token or calling Graph", detail = ex.Message });
+                response.StatusCode = HttpStatusCode.InternalServerError;
                 return response;
             }
         }
