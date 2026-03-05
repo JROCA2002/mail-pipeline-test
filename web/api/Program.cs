@@ -4,13 +4,26 @@ using Microsoft.Azure.Functions.Worker.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-var builder = FunctionsApplication.CreateBuilder(args);
+var host = new HostBuilder()
+    .ConfigureFunctionsWebApplication()
+    .ConfigureServices((context, services) =>
+    {
+        services.AddApplicationInsightsTelemetryWorkerService();
+        services.ConfigureFunctionsApplicationInsights();
+        // --- Options ---
+        services.Configure<LandingOptions>(context.Configuration.GetSection("Landing"));
 
-builder.ConfigureFunctionsWebApplication();
+        // --- HttpClients ---
+        services.AddHttpClient("GoogleCaptcha", client =>
+        {
+            client.Timeout = TimeSpan.FromSeconds(10);
+        });
+        services.AddHttpClient("FunctionGraph", client =>
+        {
+            client.BaseAddress = new Uri(context.Configuration["AzureFunctionGraphURL"] ?? string.Empty);
+            //client.Timeout = TimeSpan.FromSeconds(10);
+        }); 
+    })
+    .Build();
 
-builder.Services
-    .AddApplicationInsightsTelemetryWorkerService()
-    .ConfigureFunctionsApplicationInsights()
-    .Configure<LandingOptions>(builder.Configuration.GetSection("Landing"));
-
-builder.Build().Run();
+await host.RunAsync();

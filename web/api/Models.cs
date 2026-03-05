@@ -1,7 +1,5 @@
-﻿
-namespace api.Models
+﻿namespace api
 {
-
     public class MailLandingPageRequest
     {
         public string Token { get; set; }
@@ -37,5 +35,4 @@ namespace api.Models
             this.ErrorCodes = new List<string>();
         }
     }
-
 }
