@@ -133,6 +133,14 @@ function showTemporaryMessage(element, duration = 5000) {
   }, duration);
 }
 
+function isEmpty(value) {
+  return value == null || String(value).trim() === '';
+}
+
+function validarTelefono(telefono) {
+  return telefono.length >= 8 && telefono.length <= 15 && /^\d+$/.test(telefono);
+}
+
 if (form) {
   form.addEventListener("submit", function (event) {
     event.preventDefault();
@@ -151,12 +159,34 @@ if (form) {
 
     const data = {
       Token: captchaToken,
-      Nombre: form.nombre.value,
-      Empresa: form.empresa.value,
-      Email: form.email.value,
-      Telefono: form.telefono.value,
-      Mensaje: form.mensaje.value
+      Nombre: form.nombre.value?.trim(),
+      Empresa: form.empresa.value?.trim(),
+      Email: form.email.value?.trim(),
+      Telefono: form.telefono.value?.trim(),
+      Mensaje: form.mensaje.value?.trim()
     };
+
+    const emptyFields = [];
+
+    for (const key in data) {
+      if (key != "Email" && isEmpty(data[key])) {
+        emptyFields.push(key);
+      }
+    }
+
+    if(emptyFields.length > 0) {
+      errorMessage.textContent = "Por favor, completa todos los campos obligatorios.";
+      showTemporaryMessage(errorMessage);
+      submitButton.disabled = false;
+      return;
+    }
+
+    if (!validarTelefono(data.Telefono)) {
+      errorMessage.textContent = "Por favor, ingresa un número de teléfono válido.";
+      showTemporaryMessage(errorMessage);
+      submitButton.disabled = false;
+      return;
+    }
 
     fetch("/api/EnvioMail", {
       method: "POST",
@@ -165,7 +195,7 @@ if (form) {
     })
       .then(response => response.json())
       .then(result => {
-        console.log(result);
+        console.log(result); // TODO : Eliminar este console.log, es solo para pruebas
         if (result.ok) {
           successMessage.textContent = "¡Mensaje enviado correctamente! Te contactaremos pronto.";
           showTemporaryMessage(successMessage);
@@ -178,7 +208,7 @@ if (form) {
         }
       })
       .catch(error => {
-        console.error("Error al procesar el formulario:");
+        console.error("Error al procesar el formulario:", error); // TODO : Eliminar este console.log, es solo para pruebas
         errorMessage.textContent = "Ocurrió un error de conexión al enviar el formulario.";
         showTemporaryMessage(errorMessage);
       })
@@ -233,10 +263,10 @@ if (form) {
       grecaptcha.render("recaptcha-container", {
         sitekey: siteKey
       });
-        console.log('Fetched data:', data);
+        console.log('Fetched data:', data); // TODO : Eliminar este console.log, es solo para pruebas
     })
     .catch(error => {
-        console.error('Fetch error:', error.message);
+        console.error('Fetch error:', error.message); // TODO : Eliminar este console.error, es solo para pruebas
     });
   }, 2000); // Esperar 2 segundos antes de hacer la solicitud
 
@@ -256,10 +286,10 @@ if (form) {
         return response.json(); // Parse JSON response
     })
     .then(data => {
-        console.log('Fetched data de Azure Function MGraph:', data);
+        console.log('Fetched data de Azure Function MGraph:', data); // TODO : Eliminar este console.log, es solo para pruebas
     })
     .catch(error => {
-        console.error('Fetch error:', error.message);
+        console.error('Fetch error:', error.message); // TODO : Eliminar este console.error, es solo para pruebas
     });
   }, 2000); // Esperar 2 segundos antes de hacer la solicitud
 
