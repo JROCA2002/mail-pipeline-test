@@ -7,8 +7,6 @@ using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using Microsoft.Graph;
-using Microsoft.Graph.DeviceManagement.ManagedDevices.Item.LogCollectionRequests.Item.CreateDownloadUrl;
 using Microsoft.Kiota.Abstractions;
 using System.Net;
 using System.Text.Json;
@@ -19,7 +17,6 @@ namespace EnvioMail
     {
         private readonly ILogger _logger;
         private readonly IConfiguration _configuration;
-        private readonly IHttpClientFactory _httpClientFactory;
         private readonly IMailService _mailService;
 
         private static readonly JsonSerializerOptions JsonOptions = new()
@@ -30,18 +27,16 @@ namespace EnvioMail
         public EnviarMailDesdeLandingPageSwitch(
             ILoggerFactory loggerFactory,
             IConfiguration configuration,
-            IHttpClientFactory httpClientFactory,
             IMailService mailService)
         {
             _logger = loggerFactory.CreateLogger<EnviarMailDesdeLandingPageSwitch>();
             _configuration = configuration;
-            _httpClientFactory = httpClientFactory;
             _mailService = mailService;
         }
 
         [Function("EnviarMailDesdeLandingPageSwitch")]
         public async Task<HttpResponseData> Run(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "EnviarMailDesdeLandingPageSwitch")]
+            [HttpTrigger(AuthorizationLevel.Function, "post", Route = "EnviarMailDesdeLandingPageSwitch")]
             HttpRequestData req)
         {
             _logger.LogInformation("EnviarMailDesdeLandingPageSwitch started.");
@@ -49,32 +44,6 @@ namespace EnvioMail
             var body = await JsonSerializer.DeserializeAsync<MailLandingPageRequest>(req.Body, JsonOptions);
             if (body == null || string.IsNullOrWhiteSpace(body.Token))
                 return req.CreateResponse(HttpStatusCode.BadRequest);
-
-            // TODO: Luego implementar captcha. Pasar a un método privado
-            
-            // ===== CAPTCHA =====
-            /* 
-            var values = new Dictionary<string, string>
-            {
-                { "secret", _landing_options.SecretKey },
-                { "response", body.Token }
-            };
-
-            var httpClient = _httpClientFactory.CreateClient();
-            var captchaHttpResponse = await httpClient.PostAsync(
-                _landing_options.UrlVerify,
-                new FormUrlEncodedContent(values));
-
-            var jsonCaptcha = await captchaHttpResponse.Content.ReadAsStringAsync();
-            var captchaResponse = JsonSerializer.Deserialize<GoogleCaptchaResponse>(jsonCaptcha, JsonOptions);
-
-            if (captchaResponse?.Success != true)
-            {
-                var badCaptcha = req.CreateResponse(HttpStatusCode.BadRequest);
-                await badCaptcha.WriteAsJsonAsync(new { error = "Captcha invalido", status = HttpStatusCode.BadRequest });
-                return badCaptcha;
-            }
-            */
 
             string provider = (_configuration["MailProvider"] ?? "SMTP").Trim().ToUpperInvariant();
             HttpResponseData response = req.CreateResponse();
@@ -89,8 +58,9 @@ namespace EnvioMail
                     await _mailService.SendEmailGraphAsync(body);
                 }
 
-                await response.WriteAsJsonAsync(new { ok = true });
+                await response.WriteAsJsonAsync(new { ok = true , message = $"Mail enviado vía: {provider}"});
                 response.StatusCode = HttpStatusCode.OK;
+
                 _logger.LogInformation($"Mail sent successfully via: {provider}.");
                 return response;
 
@@ -113,7 +83,7 @@ namespace EnvioMail
             {
                 _logger.LogError(ex, $"Error en {provider}.\nMensaje: {ex.Message}");
                 var error = req.CreateResponse(HttpStatusCode.InternalServerError);
-                await error.WriteAsJsonAsync(new { error = ex.Message, status = HttpStatusCode.InternalServerError });
+                await error.WriteAsJsonAsync(new { ok = false,  error = ex.Message, status = HttpStatusCode.InternalServerError });
                 return error;
             }
         }
