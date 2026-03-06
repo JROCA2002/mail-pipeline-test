@@ -58,8 +58,9 @@ namespace EnvioMail
                     await _mailService.SendEmailGraphAsync(body);
                 }
 
-                await response.WriteAsJsonAsync(new { ok = true });
+                await response.WriteAsJsonAsync(new { ok = true , message = $"Mail enviado vía: {provider}"});
                 response.StatusCode = HttpStatusCode.OK;
+
                 _logger.LogInformation($"Mail sent successfully via: {provider}.");
                 return response;
 
@@ -82,7 +83,7 @@ namespace EnvioMail
             {
                 _logger.LogError(ex, $"Error en {provider}.\nMensaje: {ex.Message}");
                 var error = req.CreateResponse(HttpStatusCode.InternalServerError);
-                await error.WriteAsJsonAsync(new { error = ex.Message, status = HttpStatusCode.InternalServerError });
+                await error.WriteAsJsonAsync(new { ok = false,  error = ex.Message, status = HttpStatusCode.InternalServerError });
                 return error;
             }
         }

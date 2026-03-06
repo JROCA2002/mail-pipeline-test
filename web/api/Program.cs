@@ -16,7 +16,7 @@ var host = new HostBuilder()
         // --- HttpClients ---
         services.AddHttpClient("GoogleCaptcha", client =>
         {
-            client.Timeout = TimeSpan.FromSeconds(10);
+            client.Timeout = TimeSpan.FromSeconds(20);
         });
         services.AddHttpClient("FunctionGraph", client =>
         {
