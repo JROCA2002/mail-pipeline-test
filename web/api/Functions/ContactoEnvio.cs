@@ -115,6 +115,8 @@ namespace EnvioMailFrontEnd.Functions
             GoogleCaptchaResponse? captchaResponse = JsonSerializer.Deserialize<GoogleCaptchaResponse>(jsonCaptcha, JsonOptions);
 
             return captchaResponse;
+
+            // cometario para probar pipline
         }
 
     }
