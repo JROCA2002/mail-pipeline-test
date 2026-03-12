@@ -1,0 +1,46 @@
+name: Front Manual Validation
+
+on:
+  pull_request:
+    branches:
+      - develop
+      - main
+
+jobs:
+  front_manual_validation:
+    name: Validate Frontend Form Manually
+    runs-on: ubuntu-latest
+
+    environment:
+      name: manual-mail-validation
+
+    steps:
+      - name: Esperar validacion manual
+        run: |
+          echo "================================================="
+          echo "VALIDACION MANUAL DEL FRONTEND"
+          echo "================================================="
+          echo ""
+          echo "1. Ir al Pull Request."
+          echo "2. Buscar el comentario de Azure Static Web Apps."
+          echo "3. Abrir la URL de PREVIEW."
+          echo ""
+          echo "Ejemplo:"
+          echo "https://xxxxx.azurestaticapps.net"
+          echo ""
+          echo "4. Completar el formulario:"
+          echo "- nombre"
+          echo "- empresa"
+          echo "- email"
+          echo "- mensaje"
+          echo "- telefono"
+          echo "- captcha"
+          echo ""
+          echo "5. Verificar que llegue el mail."
+          echo ""
+          echo "Si funciona:"
+          echo "→ aprobar este deployment."
+          echo ""
+          echo "Si no funciona:"
+          echo "→ no aprobar."
+          echo ""
