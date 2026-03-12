@@ -1,6 +1,6 @@
 ﻿using Azure.Core;
 using Azure.Identity;
-using EnvioMail.Services.Interfaces;
+using BackEndEnvioMail.Services.Interfaces;
 using Microsoft.Extensions.Configuration;
 
 namespace BackEndEnvioMail.Services
