@@ -1,7 +1,7 @@
 using Azure.Core;
 using Azure.Identity;
-using EnvioMail.Options;
-using EnvioMail.Services.Interfaces;
+using BackEndEnvioMail.Options;
+using BackEndEnvioMail.Services.Interfaces;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
 using Microsoft.Extensions.Configuration;
@@ -13,7 +13,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
 
-namespace EnvioMail.Functions
+namespace BackEndEnvioMail.Functions
 {
     public class TestFunction
     {

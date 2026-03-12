@@ -1,6 +1,6 @@
 using Azure.Identity;
-using EnvioMail.Models;
-using EnvioMail.Services.Interfaces;
+using BackEndEnvioMail.Models;
+using BackEndEnvioMail.Services.Interfaces;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
 using Microsoft.Extensions.Configuration;
@@ -9,9 +9,9 @@ using Microsoft.Kiota.Abstractions;
 using System.Net;
 using System.Text.Json;
 
-namespace EnvioMail.Functions
+namespace BackEndEnvioMail.Functions
 {
-    public class EnviarMailDesdeLandingPageSwitch
+    public class EnviarMail
     {
         private readonly ILogger _logger;
         private readonly IConfiguration _configuration;
@@ -22,22 +22,22 @@ namespace EnvioMail.Functions
             PropertyNameCaseInsensitive = true
         };
 
-        public EnviarMailDesdeLandingPageSwitch(
+        public EnviarMail(
             ILoggerFactory loggerFactory,
             IConfiguration configuration,
             IMailService mailService)
         {
-            _logger = loggerFactory.CreateLogger<EnviarMailDesdeLandingPageSwitch>();
+            _logger = loggerFactory.CreateLogger<EnviarMail>();
             _configuration = configuration;
             _mailService = mailService;
         }
 
-        [Function("EnviarMailDesdeLandingPageSwitch")]
+        [Function("EnviarMail")]
         public async Task<HttpResponseData> Run(
-            [HttpTrigger(AuthorizationLevel.Function, "post", Route = "EnviarMailDesdeLandingPageSwitch")]
+            [HttpTrigger(AuthorizationLevel.Function, "post", Route = "EnviarMail")]
             HttpRequestData req)
         {
-            _logger.LogInformation("EnviarMailDesdeLandingPageSwitch started.");
+            _logger.LogInformation("EnviarMail started.");
 
             var body = await JsonSerializer.DeserializeAsync<MailLandingPageRequest>(req.Body, JsonOptions);
             if (body == null || string.IsNullOrWhiteSpace(body.Token))

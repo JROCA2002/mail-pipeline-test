@@ -1,14 +1,13 @@
 {
   "IsEncrypted": false,
   "Values": {
-    "AzureWebJobsStorage": "DefaultEndpointsProtocol=https;AccountName=stapielecta;AccountKey=rplGcHEi/lUanL56nNkR+tu0LYKv8J88co6iIVImzA5sNJU6U3Qy7qS9Fzev/jS/RoFHw4W0nhC7+AStySPF4w==;EndpointSuffix=core.windows.net",
     "FUNCTIONS_WORKER_RUNTIME": "dotnet-isolated",
+    "AzureWebJobsStorage": "UseDevelopmentStorage=true",
     "Landing__UrlVerify": "https://www.google.com/recaptcha/api/siteverify",
-    "Landing__GoogleToken": "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI",
+    "Landing__SiteKey": "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI",
     "Landing__SecretKey": "6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe",
-    "AzureFunctionGraphURL": "http://localhost:7120/",
-    "AzureFunctionGraphKey": "R1Qwa82gGgegq6xOex6sgqnkviqEMQkJksPguYm75UDEAzFu-VoJpw==",
-    "AZURE_STORAGE_CONNECTION_STRING": "DefaultEndpointsProtocol=https;AccountName=stapielecta;AccountKey=rplGcHEi/lUanL56nNkR+tu0LYKv8J88co6iIVImzA5sNJU6U3Qy7qS9Fzev/jS/RoFHw4W0nhC7+AStySPF4w==;EndpointSuffix=core.windows.net"
+    "BackEndURL": "http://localhost:7120/",
+    "BackEndKey": "R1Qwa82gGgegq6xOex6sgqnkviqEMQkJksPguYm75UDEAzFu-VoJpw=="
   },
   "Host": {
     "LocalHttpPort": 7071,

@@ -5,7 +5,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.Graph;
 using Microsoft.Graph.Models;
 
-namespace EnvioMail.Services
+namespace BackEndEnvioMail.Services
 {
     public class MailService : IMailService
     {

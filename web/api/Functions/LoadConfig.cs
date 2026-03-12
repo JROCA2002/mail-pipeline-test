@@ -1,20 +1,21 @@
-using EnvioMail.Options;
+using EnvioMailFrontEnd.Options;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System.Net;
 using System.Reflection;
 using System.Text.Json;
 
-namespace api;
+namespace EnvioMailFrontEnd.Functions;
 
 public class LoadConfig
 {
     private readonly ILogger<LoadConfig> _logger;
     private readonly LandingOptions _landing_options;
+    private readonly IConfiguration _configuration;
     private readonly IHttpClientFactory _httpClientFactory;
 
     private static readonly JsonSerializerOptions JsonOptions = new()
@@ -22,10 +23,14 @@ public class LoadConfig
         PropertyNameCaseInsensitive = true
     };
 
-    public LoadConfig(ILogger<LoadConfig> logger, IOptions<LandingOptions> landing_options, IHttpClientFactory httpClientFactory)
+    public LoadConfig(ILogger<LoadConfig> logger,
+                IOptions<LandingOptions> landing_options,
+                IHttpClientFactory httpClientFactory,
+                IConfiguration configuration)
     {
         _logger = logger;
         _landing_options = landing_options.Value;
+        _configuration = configuration;
         _httpClientFactory = httpClientFactory;
     }
 
@@ -67,7 +72,7 @@ public class LoadConfig
         var model = new
         {
             message = "AZURE FUNCTION API DE LA WEB STATIC (CAPTCHA)",
-            build_info = build_info,
+            build_info,
             captcha_options = _landing_options
         };
 
@@ -76,7 +81,9 @@ public class LoadConfig
         return response;
     }
 
-    // TODO : Este método es de prueba, luego de las pruebas esto se elimina. (Es para cargar las varibles de entorno en FunctionGraph)
+
+
+
     [Function("TestIntegration")]
     public async Task<HttpResponseData> TestIntegration(
         [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "TestIntegration")]
@@ -84,17 +91,21 @@ public class LoadConfig
     {
         _logger.LogInformation("TestIntegration started.");
 
-        var client = _httpClientFactory.CreateClient("FunctionGraph");
-
-        HttpResponseMessage graphResponse;
+        HttpResponseMessage backendResponse;
         try
         {
-            graphResponse = await client.GetAsync("api/load_config");
-            var content = await graphResponse.Content.ReadAsStringAsync();
+            var client = _httpClientFactory.CreateClient("FunctionBackEnd");
+
+            var functionKey = _configuration["BackEndKey"];
+            client.DefaultRequestHeaders.Remove("x-functions-key");
+            client.DefaultRequestHeaders.Add("x-functions-key", functionKey);
+
+            backendResponse = await client.GetAsync("api/load_config");
+            var content = await backendResponse.Content.ReadAsStringAsync();
             object responseBody = JsonSerializer.Deserialize<JsonElement>(string.IsNullOrWhiteSpace(content) ? "null" : content, JsonOptions);
             var result = new
             {
-                statusCode = (int)graphResponse.StatusCode,
+                statusCode = (int)backendResponse.StatusCode,
                 response = responseBody
             };
 

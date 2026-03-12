@@ -1,4 +1,4 @@
-namespace EnvioMail.Options
+namespace BackEndEnvioMail.Options
 {
     public class MailServiceOptions
     {

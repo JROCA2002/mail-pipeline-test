@@ -1,6 +1,6 @@
 ﻿using Azure.Core;
 
-namespace EnvioMail.Services.Interfaces
+namespace BackEndEnvioMail.Services.Interfaces
 {
     public interface IAuthService
     {

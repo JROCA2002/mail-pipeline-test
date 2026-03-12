@@ -1,5 +1,5 @@
 ﻿
-namespace EnvioMail.Models
+namespace BackEndEnvioMail.Models
 {
 
     public class MailLandingPageRequest

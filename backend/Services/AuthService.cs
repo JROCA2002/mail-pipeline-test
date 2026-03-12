@@ -3,7 +3,7 @@ using Azure.Identity;
 using EnvioMail.Services.Interfaces;
 using Microsoft.Extensions.Configuration;
 
-namespace EnvioMail.Services
+namespace BackEndEnvioMail.Services
 {
     public class AuthService : IAuthService
     {

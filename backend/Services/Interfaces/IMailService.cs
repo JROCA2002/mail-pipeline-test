@@ -1,6 +1,6 @@
-﻿using EnvioMail.Models;
+﻿using BackEndEnvioMail.Models;
 
-namespace EnvioMail.Services.Interfaces
+namespace BackEndEnvioMail.Services.Interfaces
 {
     public interface IMailService
     {
