@@ -1,6 +1,6 @@
-using EnvioMail.Options;
-using EnvioMail.Services;
-using EnvioMail.Services.Interfaces;
+using BackEndEnvioMail.Options;
+using BackEndEnvioMail.Services;
+using BackEndEnvioMail.Services.Interfaces;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -14,8 +14,6 @@ var host = new HostBuilder()
 
         // --- Options ---
         services.Configure<MailServiceOptions>(context.Configuration.GetSection("MailService"));
-        services.Configure<LandingOptions>(context.Configuration.GetSection("Landing"));
-        services.Configure<GraphMailOptions>(context.Configuration.GetSection("Graph"));
 
         // --- Services ---
         services.AddScoped<IAuthService, AuthService>();

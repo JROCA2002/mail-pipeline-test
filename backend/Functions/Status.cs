@@ -1,40 +1,32 @@
+using Azure.Core;
+using Azure.Identity;
+using BackEndEnvioMail.Options;
+using BackEndEnvioMail.Services.Interfaces;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Microsoft.Graph;
 using System.Net;
 using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
-using Azure.Core;
-using Azure.Identity;
-using Microsoft.Graph;
-using EnvioMail.Options;
-using EnvioMail.Services.Interfaces;
-using System.Threading;
 
-namespace api
+namespace BackEndEnvioMail.Functions
 {
     public class TestFunction
     {
-        private readonly LandingOptions _landing_options;
         private readonly MailServiceOptions _mail_options;
-        private readonly GraphMailOptions _graph_options;
         private readonly IAuthService _authService;
         private readonly IConfiguration _configuration;
 
         public TestFunction(IConfiguration configuration,
-            IOptions<LandingOptions> landing_options,
             IOptions<MailServiceOptions> mailOptions,
-            IOptions<GraphMailOptions> graphOptions,
             IAuthService authService)
         {
             _configuration = configuration;
-            _landing_options = landing_options.Value;
             _mail_options = mailOptions.Value;
-            _graph_options = graphOptions.Value;
             _authService = authService;
         }
 
@@ -75,25 +67,12 @@ namespace api
             }
         }
 
-        /// <summary>
-        /// 
-        /// 
-        /// PS C:\Users\hpryz\source\repos\codes\ALUAR> az functionapp deployment source config-zip -g electa-codes-test01_group -n electa-mail --src .\function2-00.zip
-        /// 
-        /// 
-        /// </summary>
-        /// <param name="req"></param>
-        /// <returns></returns>
-        /// 
-        // TODO: Este método es de prueba, luego de las pruebas esto se elimina.
 
         [Function("load_config")]
         public Task<HttpResponseData> Run(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "load_config")]
+            [HttpTrigger(AuthorizationLevel.Function, "get", Route = "load_config")]
             HttpRequestData req)
         {
-
-            string provider = (_configuration["MailProvider"] ?? "SMTP").Trim().ToUpperInvariant();
 
             Assembly assembly = Assembly.GetExecutingAssembly();
 
@@ -114,24 +93,17 @@ namespace api
             {
                 source = "AZURE FUNCTION MICROSOFT GRAPH (BACKEND)",
                 random = GenerateRandomHex(30),
-                build_info = build_info,
-                mail_provider = provider,
-                mail_options = new
-                {
-                    MailFrom = _mail_options.MailFrom,
-                    MailTo = _mail_options.MailTo,
-                },
-                _graph_options = _graph_options
+                build_info,
+                mail_options = _mail_options
             };
             response.WriteString(JsonSerializer.Serialize(model));
             return Task.FromResult(response);
         }
 
 
-        // TODO: Este método es de prueba, luego de las pruebas esto se elimina.
         [Function("status")]
         public Task<HttpResponseData> Status(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "status")]
+            [HttpTrigger(AuthorizationLevel.Function, "get", Route = "status")]
             HttpRequestData req)
         {
             // Enumerate functions in the current assembly and try to extract routes when present
@@ -183,10 +155,9 @@ namespace api
         }
 
 
-        // TODO: Este método es de prueba, luego de las pruebas esto se elimina.
         [Function("graph_auth")]
         public async Task<HttpResponseData> GraphAuth(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "graph_auth")]
+            [HttpTrigger(AuthorizationLevel.Function, "get", Route = "graph_auth")]
             HttpRequestData req)
         {
             HttpResponseData response = req.CreateResponse();
@@ -201,12 +172,12 @@ namespace api
 
                 // Intentar obtener información del usuario configurado (opcional)
                 object? userInfo = null;
-                if (!string.IsNullOrWhiteSpace(_graph_options.SenderUser))
+                if (!string.IsNullOrWhiteSpace(_mail_options.MailFrom))
                 {
                     try
                     {
                         var graphClient = new GraphServiceClient(credential);
-                        var user = await graphClient.Users[_graph_options.SenderUser].GetAsync();
+                        var user = await graphClient.Users[_mail_options.MailFrom].GetAsync();
                         userInfo = new
                         {
                             id = user?.Id,
@@ -225,7 +196,7 @@ namespace api
                     success = true,
                     message = "Authenticated to Microsoft Graph (token acquired)",
                     expiresOn = accessToken.ExpiresOn,
-                    senderUser = _graph_options.SenderUser,
+                    senderUser = _mail_options.MailFrom,
                     token = accessToken.Token,
                     user = userInfo
                 });
@@ -234,7 +205,7 @@ namespace api
             }
             catch (AuthenticationFailedException ex)
             {
-                await response.WriteAsJsonAsync(new { success = false, error = "Authentication failed", message = ex.Message , detail = ex.InnerException?.Message});
+                await response.WriteAsJsonAsync(new { success = false, error = "Authentication failed", message = ex.Message, detail = ex.InnerException?.Message });
                 response.StatusCode = HttpStatusCode.Unauthorized;
                 return response;
             }

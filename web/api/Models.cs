@@ -1,4 +1,4 @@
-﻿namespace api
+﻿namespace EnvioMailFrontEnd
 {
     public class MailLandingPageRequest
     {

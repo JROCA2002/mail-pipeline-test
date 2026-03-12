@@ -1,10 +1,9 @@
-﻿using api.Models;
+﻿using BackEndEnvioMail.Models;
 
-namespace EnvioMail.Services.Interfaces
+namespace BackEndEnvioMail.Services.Interfaces
 {
     public interface IMailService
     {
         Task SendEmailGraphAsync(MailLandingPageRequest mailRequest);
-        Task SendEmailSmtpAsync(MailLandingPageRequest mailRequest);
     }
 }

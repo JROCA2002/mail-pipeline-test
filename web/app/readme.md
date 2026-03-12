@@ -11,4 +11,4 @@ az staticwebapp appsettings set --name electa-codes-test01 --resource-group elec
 az staticwebapp appsettings set --name electa-codes-test01 --resource-group electa-codes-test01_group --setting-names "MailService__MailTo=dcastro@codes.com.ar"
 az staticwebapp appsettings set --name electa-codes-test01 --resource-group electa-codes-test01_group --setting-names "MailService__Subject=Contacto por Electa Trading"
 az staticwebapp appsettings set --name electa-codes-test01 --resource-group electa-codes-test01_group --setting-names "Landing__UrlVerify=https://www.google.com/recaptcha/api/siteverify"
-az staticwebapp appsettings set --name electa-codes-test01 --resource-group electa-codes-test01_group --setting-names "Landing__GoogleToken=*****
+az staticwebapp appsettings set --name electa-codes-test01 --resource-group electa-codes-test01_group --setting-names "Landing__SiteKey=*****

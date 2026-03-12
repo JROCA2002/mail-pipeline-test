@@ -1,4 +1,4 @@
-using EnvioMail.Options;
+using EnvioMailFrontEnd.Options;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Builder;
 using Microsoft.Extensions.DependencyInjection;
@@ -10,19 +10,21 @@ var host = new HostBuilder()
     {
         services.AddApplicationInsightsTelemetryWorkerService();
         services.ConfigureFunctionsApplicationInsights();
+
         // --- Options ---
         services.Configure<LandingOptions>(context.Configuration.GetSection("Landing"));
 
         // --- HttpClients ---
         services.AddHttpClient("GoogleCaptcha", client =>
         {
-            client.Timeout = TimeSpan.FromSeconds(20);
+            // client.Timeout = TimeSpan.FromSeconds(20);
         });
-        services.AddHttpClient("FunctionGraph", client =>
+
+        services.AddHttpClient("FunctionBackEnd", client =>
         {
-            client.BaseAddress = new Uri(context.Configuration["AzureFunctionGraphURL"] ?? string.Empty);
-            //client.Timeout = TimeSpan.FromSeconds(10);
-        }); 
+            client.BaseAddress = new Uri(context.Configuration["BackEndURL"] ?? string.Empty);
+            // client.Timeout = TimeSpan.FromSeconds(10);
+        });
     })
     .Build();
 

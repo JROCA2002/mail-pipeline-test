@@ -1,5 +1,5 @@
 ﻿
-namespace api.Models
+namespace BackEndEnvioMail.Models
 {
 
     public class MailLandingPageRequest
@@ -19,22 +19,6 @@ namespace api.Models
             this.Email = string.Empty;
             this.Telefono = string.Empty;
             this.Mensaje = string.Empty;
-        }
-    }
-
-    public class GoogleCaptchaResponse
-    {
-        public bool Success { get; set; }
-        public DateTime ChallengeTs { get; set; }
-        public string Hostname { get; set; }
-        public List<string> ErrorCodes { get; set; }
-
-        public GoogleCaptchaResponse()
-        {
-            this.Success = false;
-            this.Hostname = string.Empty;
-            this.ChallengeTs = DateTime.Now;
-            this.ErrorCodes = new List<string>();
         }
     }
 
