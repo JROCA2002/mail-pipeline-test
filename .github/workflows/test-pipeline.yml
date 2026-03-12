@@ -1,0 +1,19 @@
+name: Test Pipeline
+
+on:
+  pull_request:
+  push:
+
+jobs:
+  test-job:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Mostrar mensaje
+        run: echo "Pipeline funcionando correctamente"
+
+      - name: Mostrar fecha
+        run: date
