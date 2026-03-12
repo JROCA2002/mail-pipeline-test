@@ -1,0 +1,51 @@
+name: Backend Curl Validation
+
+on:
+  pull_request:
+    branches:
+      - develop
+
+jobs:
+  backend_curl_test:
+    name: Backend Curl Test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Ejecutar curl al endpoint
+        run: |
+          HTTP_CODE=$(curl -s -o response.txt -w "%{http_code}" \
+          --location '${{ secrets.BACKEND_URL }}/api/EnvioMail' \
+          --header 'Content-Type: application/json' \
+          --header 'x-functions-key: ${{ secrets.BACKEND_FUNCTION_KEY }}' \
+          --data-raw '{
+            "nombre": "rocio",
+            "empresa": "empresa test",
+            "token": "6LeIxAcTAAAAAJcZVRqyHh7UMIEGNQ_MXjiZKhI",
+            "email": "emilce.rocio.palma@gmail.com",
+            "mensaje": "mensaje test",
+            "telefono": "3814068088"
+          }')
+
+          echo "HTTP_CODE=$HTTP_CODE"
+          echo "Respuesta del endpoint:"
+          cat response.txt
+
+          if [ "$HTTP_CODE" -ge 200 ] && [ "$HTTP_CODE" -lt 300 ]; then
+            echo "RESULTADO: envio exitoso"
+          else
+            echo "RESULTADO: fallo el envio"
+            exit 1
+          fi
+
+  backend_manual_ok:
+    name: Backend Manual OK
+    needs: backend_curl_test
+    runs-on: ubuntu-latest
+    environment:
+      name: manual-mail-validation
+
+    steps:
+      - name: Esperar aprobacion manual
+        run: |
+          echo "Revisar el resultado del curl."
+          echo "Si el envio fue correcto, aprobar este deployment."
