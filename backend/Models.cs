@@ -1,5 +1,5 @@
 ﻿
-namespace api.Models
+namespace EnvioMail.Models
 {
 
     public class MailLandingPageRequest

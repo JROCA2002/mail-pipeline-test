@@ -1,4 +1,4 @@
-﻿using api.Models;
+﻿using EnvioMail.Models;
 
 namespace EnvioMail.Services.Interfaces
 {

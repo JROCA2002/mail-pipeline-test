@@ -1,4 +1,4 @@
-﻿using api.Models;
+﻿using EnvioMail.Models;
 using EnvioMail.Options;
 using EnvioMail.Services.Interfaces;
 using Microsoft.Extensions.Options;

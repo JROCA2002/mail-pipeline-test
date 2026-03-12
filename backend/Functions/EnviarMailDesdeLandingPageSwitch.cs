@@ -1,5 +1,5 @@
-using api.Models;
 using Azure.Identity;
+using EnvioMail.Models;
 using EnvioMail.Services.Interfaces;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
