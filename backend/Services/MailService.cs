@@ -4,19 +4,17 @@ using EnvioMail.Services.Interfaces;
 using Microsoft.Extensions.Options;
 using Microsoft.Graph;
 using Microsoft.Graph.Models;
-using System.Net.Mail;
 
 namespace EnvioMail.Services
 {
     public class MailService : IMailService
     {
         private readonly IAuthService _authService;
-        private readonly GraphMailOptions _graph_options;
         private readonly MailServiceOptions _mail_options;
-        public MailService( IAuthService authService, IOptions<GraphMailOptions> graphOptions, IOptions<MailServiceOptions> mailOptions)
+
+        public MailService(IAuthService authService, IOptions<MailServiceOptions> mailOptions)
         {
             _authService = authService;
-            _graph_options = graphOptions.Value;
             _mail_options = mailOptions.Value;
         }
 
@@ -28,54 +26,20 @@ namespace EnvioMail.Services
             graphServiceClient = new GraphServiceClient(credential);
 
             var cuerpo = BuildCuerpoMail(mailRequest);
-            var message = BuildMessageGraph(_mail_options.Subject, cuerpo, _mail_options.MailTo, mailRequest.Email);
+            var message = BuildMessageGraph(_mail_options.Subject,
+                                cuerpo,
+                                _mail_options.MailTo,
+                                mailRequest.Email);
 
-            await graphServiceClient.Users[_graph_options.SenderUser]
+            await graphServiceClient.Users[_mail_options.MailFrom]
             .SendMail
             .PostAsync(new Microsoft.Graph.Users.Item.SendMail.SendMailPostRequestBody
-                {
-                    Message = message,
-                    SaveToSentItems = true
-                }
-            );
+            {
+                Message = message,
+                SaveToSentItems = true
+            });
         }
 
-        public async Task SendEmailSmtpAsync(MailLandingPageRequest mailRequest)
-        {
-            string mailFrom = _mail_options.MailFrom;
-
-            string cuerpo = BuildCuerpoMail(mailRequest);
-
-            using var mMailMessage = new MailMessage
-            {
-                From = new MailAddress(mailFrom, _mail_options.MailFromTitulo),
-                Subject = _mail_options.Subject,
-                Body = cuerpo,
-                IsBodyHtml = _mail_options.IsBodyHtml,
-                Priority = MailPriority.Normal
-            };
-
-            mMailMessage.To.Add(new MailAddress(_mail_options.MailTo));
-
-            // Reply-To para que el destinatario responda al usuario
-            if (!string.IsNullOrWhiteSpace(mailRequest.Email))
-            {
-                mMailMessage.ReplyToList.Add(new MailAddress(mailRequest.Email.Trim()));
-            }
-
-            using var smtp = new SmtpClient(_mail_options.SmtpClient)
-            {
-                Port = _mail_options.SmtpClientPort,
-                EnableSsl = true, // FIJO POR SONARQUBE
-                UseDefaultCredentials = _mail_options.SmtpClientUseDefaultCredentials,
-                DeliveryMethod = SmtpDeliveryMethod.Network
-            };
-
-            await smtp.SendMailAsync(mMailMessage);
-            
-        }
-
-        #region Métodos Privados
         private static Message BuildMessageGraph(string subject, string cuerpo, string mailTo, string replyTo) => new()
         {
             Subject = subject,
@@ -110,6 +74,5 @@ namespace EnvioMail.Services
                 <p>{mailRequest.Mensaje}</p>
         ";
 
-        #endregion
     }
 }

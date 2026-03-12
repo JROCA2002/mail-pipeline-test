@@ -4,6 +4,6 @@ namespace EnvioMail.Services.Interfaces
 {
     public interface IAuthService
     {
-         TokenCredential GetTokenCredential();
+        TokenCredential GetTokenCredential();
     }
 }
