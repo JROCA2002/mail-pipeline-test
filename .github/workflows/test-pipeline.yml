@@ -15,5 +15,5 @@ jobs:
       - name: Mostrar mensaje
         run: echo "Pipeline funcionando correctamente"
 
-      - name: Mostrar fecha
+      - name: Mostrar fechaS
         run: date
