@@ -29,8 +29,14 @@ namespace EnvioMail.Services
             // TODO : Revisar logica
             switch (provider)
             {
+                case "GRAPH_DEFAULT_IDENTITY":
+                    credential = new DefaultAzureCredential(new DefaultAzureCredentialOptions
+                    {
+                        ExcludeInteractiveBrowserCredential = true
+                    });
+                    break;
+
                 case "GRAPH_MANAGED_IDENTITY_SYSTEM_ASSIGNED":
-                case "GRAPH_MI":
                     credential = new ManagedIdentityCredential(ManagedIdentityId.SystemAssigned);
                     break;
 

@@ -3,7 +3,7 @@
   "Values": {
     "AzureWebJobsStorage": "UseDevelopmentStorage=true",
     "FUNCTIONS_WORKER_RUNTIME": "dotnet-isolated",
-    "MailService__MailFrom": "info@codes.com.ar",
+    "MailService__MailFrom": "notificaciones@electatrading.com",
     "MailService__MailFromTitulo": "Electa Trading",
     "MailService__SmtpClient": "smtp-relay.gmail.com",
     "MailService__SmtpClientPort": 587,
@@ -11,12 +11,12 @@
     "MailService__SmtpClientUseDefaultCredentials": false,
     "MailService__IsBodyHtml": true,
     "MailService__ProcessToken": "AQAAAAIAAYagAAAAEP1SZgadX6YFfu9Rg2Wp0JNsvwWOixaVh5i/+iUs0qPqOSaCNmOH39JIRuPin8dGFw==",
-    "MailService__MailTo": "rpalma@codes.com.ar",
+    "MailService__MailTo": "info@electatrading.com",
     "MailService__Subject": "Contacto por Electa Trading",
-    "MailProvider": "GRAPH_CLIENT_SECRET_CREDENTIAL", /*Testear en local*/
-    "Graph__TenantId": "1e33d93b-2ca9-4323-ac0a-b5d8c9188d52",
-    "Graph__ClientId": "f31c06f3-d69b-465f-bbc9-1c4d319dc9ff",
-    "Graph__ClientSecret": "LYl8Q~~PW8wbHz0e0uRB_j8ebz_RScyWf.rzpaZY",
+    "MailProvider": "GRAPH_DEFAULT_IDENTITY",
+    "Graph__TenantId": "",
+    "Graph__ClientId": "",
+    "Graph__ClientSecret": "",
     "Graph__SenderUser": "notificaciones@electatrading.com",
     "Graph__UserAssignedIdentityResourceId": "",
     "Graph__UserAssignedIdentityObjectId": "",
@@ -28,4 +28,3 @@
     "CORSCredentials": false
   }
 }
-

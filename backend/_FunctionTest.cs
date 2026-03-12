@@ -112,7 +112,7 @@ namespace api
 
             var model = new
             {
-                source = "AZURE FUNCTION MICROSOFT GRAPH",
+                source = "AZURE FUNCTION MICROSOFT GRAPH (BACKEND)",
                 random = GenerateRandomHex(30),
                 build_info = build_info,
                 mail_provider = provider,
