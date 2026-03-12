@@ -16,7 +16,6 @@ jobs:
           HTTP_CODE=$(curl -s -o response.txt -w "%{http_code}" \
           --location '${{ secrets.BACKEND_URL }}/api/EnvioMail' \
           --header 'Content-Type: application/json' \
-          --header 'x-functions-key: ${{ secrets.BACKEND_FUNCTION_KEY }}' \
           --data-raw '{
             "nombre": "rocio",
             "empresa": "empresa test",
